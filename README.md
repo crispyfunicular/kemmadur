@@ -23,10 +23,22 @@ Bravo !
 Quel est le résultat de : e + kazh ?
 Réponse : e gazh
 Mauvaise réponse ! Gwall eo...
-Réessayer (1), voir la règle (2) ou voir la réponse (3) ? 3
+Réessayer (1), voir le genre (2), voir la catégorie de mutation (3) voir la réponse (4) ? 2
+Genre : kazh est masculin (g.m.)
+Réessayer (1), voir le genre (2), voir la catégorie de mutation (3) ou voir la réponse (4) ? 3
+Catégorie : lénition (adoucissement)
+Réessayer (1), voir le genre (2), voir la catégorie de mutation (3) ou voir la réponse (4) ? 5
 e c'hazh — Lénition : k → c'h
 Score : 1/2
 ```
+
+À l'image du fonctionnement de [Magister Conjugationis](https://github.com/crispyfunicular/magister_conjugationis/) (qui propose de « voir les temps primitifs » ou « voir le lemme » en cas d'erreur), Kemmadur propose un **système d'indices progressifs** en cas de mauvaise réponse :
+
+1. **Réessayer** — Tenter de nouveau sa chance.
+2. **Voir le genre** — Affiche le genre grammatical du mot (*masculin*, *féminin*), indice utile car certaines mutations sont déclenchées par le genre.
+3. **Voir la catégorie de mutation** — Affiche le type de mutation attendu (*lénition*, *spirantisation*, *durcissement*, *mixte*), sans donner directement la forme mutée.
+4. **Voir la règle** — Affiche la règle de mutation applicable (ex : `k → c'h`).
+5. **Voir la réponse** — Affiche la réponse complète (aucun point attribué).
 
 ## Rappel : les mutations bretonnes
 
@@ -98,7 +110,3 @@ kemmadur/
 ## Licence
 
 MIT
-
----
-
-*Projet développé par Morgane Bona-Pellissier — 2026*
