@@ -2,108 +2,91 @@
 
 > ⚠️ **Ce projet est en cours de développement.**
 
-Outil CLI en Python pour s'entraîner aux mutations initiales en breton (*kemmadurioù*). Quiz interactif couvrant la lénition, la spirantisation, le durcissement et la mutation mixte.
+Outil pour s'entraîner aux mutations initiales en breton (*kemmadurioù*). Le projet génère des questions de type quiz à partir d'une base de données SQLite couvrant la lénition (adoucissement), la spirantisation, le durcissement et la mutation mixte.
 
 ## Description
 
-Les mutations initiales (*kemmadurioù*) sont l'un des aspects les plus caractéristiques — et les plus redoutés — de la morphophonologie bretonne. La consonne initiale d'un mot est modifiée en fonction du mot grammatical qui le précède (possessifs, articles, prépositions, numéraux…).
+Les mutations initiales (*kemmadurioù*) sont l'un des aspects les plus caractéristiques — et les plus redoutés — de la morphophonologie bretonne. La consonne initiale d'un mot est modifiée en fonction du mot grammatical qui le précède (articles, possessifs, prépositions, numéraux…).
 
-Ce programme permet de les pratiquer sous forme de quiz interactif :
-- Le programme affiche un **déclencheur** et un **mot** (ex : `da + tad`)
-- L'utilisateur doit donner la forme mutée (ex : `da dad`)
+Ce projet modélise ces mutations en SQL et génère automatiquement des questions d'entraînement :
+- **Déclencheur + nom** → forme mutée (ex : `da + tad = da dad`)
+- **Nom féminin + adjectif** → adjectif muté (ex : `mamm + brav = mamm vrav`)
+- **Article + nom** → article correct + mutation éventuelle (ex : `ar + bro = ar vro`)
 
-```
-$ python scripts/kemmadur.py --mutation lénition
-Combien de mots voulez-vous pratiquer (entre 1 et 10) ? 3
-
-Quel est le résultat de : da + tad ?
-Réponse : da dad
-Bravo !
-
-Quel est le résultat de : e + kazh ?
-Réponse : e gazh
-Mauvaise réponse ! Gwall eo...
-Réessayer (1), voir le genre (2), voir la catégorie de mutation (3) voir la réponse (4) ? 2
-Genre : kazh est masculin (g.m.)
-Réessayer (1), voir le genre (2), voir la catégorie de mutation (3) ou voir la réponse (4) ? 3
-Catégorie : lénition (adoucissement)
-Réessayer (1), voir le genre (2), voir la catégorie de mutation (3) ou voir la réponse (4) ? 5
-e c'hazh — Lénition : k → c'h
-Score : 1/2
-```
-
-À l'image du fonctionnement de [Magister Conjugationis](https://github.com/crispyfunicular/magister_conjugationis/) (qui propose de « voir les temps primitifs » ou « voir le lemme » en cas d'erreur), Kemmadur propose un **système d'indices progressifs** en cas de mauvaise réponse :
-
-1. **Réessayer** — Tenter de nouveau sa chance.
-2. **Voir le genre** — Affiche le genre grammatical du mot (*masculin*, *féminin*), indice utile car certaines mutations sont déclenchées par le genre.
-3. **Voir la catégorie de mutation** — Affiche le type de mutation attendu (*lénition*, *spirantisation*, *durcissement*, *mixte*), sans donner directement la forme mutée.
-4. **Voir la règle** — Affiche la règle de mutation applicable (ex : `k → c'h`).
-5. **Voir la réponse** — Affiche la réponse complète (aucun point attribué).
+À terme, un quiz interactif en Python viendra s'appuyer sur cette base, à l'image de [Magister Conjugationis](https://github.com/crispyfunicular/magister_conjugationis/) qui propose un système d'indices progressifs en cas d'erreur.
 
 ## Rappel : les mutations bretonnes
 
-| Lettre | Lénition | Spirantisation | Durcissement |
-|--------|----------|----------------|--------------|
-| **k**  | g        | c'h            | —            |
-| **p**  | b        | f              | —            |
-| **t**  | d        | z              | —            |
-| **b**  | v        | —              | p            |
-| **d**  | z        | —              | t            |
-| **g**  | c'h      | —              | k            |
-| **gw** | w        | —              | kw           |
-| **m**  | v        | —              | —            |
+| Lettre | Lénition (adoucissement) | Spirantisation | Durcissement | Mixte |
+|--------|--------------------------|----------------|--------------|-------|
+| **k**  | g                        | c'h            | —            | —     |
+| **kw** | —                        | —              | —            | —     |
+| **p**  | b                        | f              | —            | —     |
+| **t**  | d                        | z              | —            | —     |
+| **g**  | c'h                      | —              | k            | c'h   |
+| **gw** | w                        | —              | kw           | w     |
+| **d**  | z                        | —              | t            | z     |
+| **b**  | v                        | —              | p            | v     |
+| **m**  | v                        | —              | —            | v     |
 
-**Exemples de déclencheurs :**
-- **Lénition** : *da* (ton), *e* (son/sa masc.)…
-- **Spirantisation** : *ma* (mon), *he* (son/sa fém.), *o* (leur), *tri/teir* (trois)…
-- **Durcissement** : *ho* (votre), *az* (de)…
+**Déclencheurs :**
+- **Lénition (adoucissement)** : *a*, *da*, *daou*, *div*, *dindan*, *diwar*, *dre*, *e* (possessif masc.), *eme*, *en em*, *en ur*, *hanter*, *holl*, *na*, *ne*, *pa*, *pe*, *re*, *war*… + article + nom féminin singulier, article + nom masculin pluriel (en *-ou*), nom féminin + adjectif
+- **Spirantisation** : *ma/va* (mon), *he* (son/sa fém.), *o* (leur), *tri/teir* (trois), *pevar/peder* (quatre), *nav* (neuf)
+- **Durcissement** : *ho* (votre), *az/ez* (te/toi), *da'z* (à toi)…
+- **Mixte** : participe présent (*o* + verbe), après la particule verbale *e*, après *ma* (que)
 
 ## Installation
 
 ```bash
-git clone https://github.com/<username>/kemmadur.git
+git clone https://github.com/crispyfunicular/kemmadur.git
 cd kemmadur
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+```
+
+La base SQLite `kemmadur.db` est fournie prête à l'emploi. Pour la recréer depuis les fichiers source :
+
+```bash
+sqlite3 kemmadur.db < 1_tables.sql
+sqlite3 kemmadur.db < 2_donnees.sql
 ```
 
 ## Utilisation
 
-Les scripts sont conçus pour être lancés depuis la racine du projet :
+Générer les questions d'entraînement :
 
 ```bash
-python scripts/kemmadur.py --help
+sqlite3 kemmadur.db < 3_questions.sql
 ```
 
-### Options disponibles
+Exemple de sortie :
 
-| Option | Description |
-|--------|-------------|
-| `--mutation` | Filtrer par type de mutation (`lénition`, `spirantisation`, `durcissement`, `mixte`) |
-| `--trigger` | Filtrer par déclencheur (`da`, `ma`, `he`…) |
-| `--debug` | Activer le mode debug |
+```
+da + tad = ?|da dad
+da + penn = ?|da benn
+ma + tad = ?|ma zad
+ho + tad = ?|ho tad
+mamm + brav = ?|mamm vrav
+ar + bro = ?|ar vro
+```
 
 ## Structure du projet
 
 ```
 kemmadur/
-├── scripts/
-│   ├── kemmadur.py         # Script CLI principal
-│   ├── mutations.py        # Moteur de mutations
-│   └── test_kemmadur.py    # Tests unitaires
-├── data/
-│   ├── words.json          # Mots à étudier
-│   └── triggers.json       # Déclencheurs de mutations
+├── 1_tables.sql        # Schéma (noms, adjectifs, déclencheurs, mutations)
+├── 2_donnees.sql       # Données (vocabulaire + règles de déclenchement)
+├── 3_questions.sql     # Requêtes de génération de quiz
+├── kemmadur.db         # Base SQLite pré-remplie
+├── anki/               # Deck Anki source
 ├── README.md
-├── requirements.txt
 └── LICENSE
 ```
 
 ## Feuille de route
 
 - [x] Modélisation des mutations (lénition, spirantisation, durcissement, mixte)
-- [ ] Quiz interactif (déclencheur + mot → forme mutée)
+- [x] Base de données SQL + requêtes de génération de questions
+- [ ] Quiz interactif CLI en Python
+- [ ] Système d'indices progressifs (genre, catégorie de mutation, règle, réponse)
 - [ ] Mode traduction (forme mutée → traduction française)
 - [ ] Interface web
 
