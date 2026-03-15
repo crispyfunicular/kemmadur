@@ -1,8 +1,15 @@
-CREATE TABLE IF NOT EXISTS lexemes (
+CREATE TABLE IF NOT EXISTS noms (
     id INTEGER PRIMARY KEY,
     breton TEXT,
     français TEXT,
+    genre TEXT,
     pluriel TEXT
+);
+
+CREATE TABLE IF NOT EXISTS adjectifs (
+    id TEXT PRIMARY KEY,
+    breton TEXT,
+    français TEXT
 );
 
 CREATE TABLE IF NOT EXISTS déclencheurs (
@@ -29,114 +36,196 @@ VALUES
     ('t', NULL, 'd', 'z'),
     ('m', NULL, 'v', NULL),
     ('b', 'p', 'v', NULL),
-    ('p', NULL, NULL, 'f');
+    ('p', NULL, NULL, 'f'),
+    ('kozh', 'vieux', NULL),
+    ('brav', 'beau', NULL);
 
-INSERT INTO lexemes (breton, français, nature, genre, pluriel)
+INSERT INTO adjectifs (breton, français)
 VALUES
-    ('tad', 'père', 'nom', 'm', 'tadoù'),
-    ('ti', 'maison', 'nom', 'm', 'tiez'),
-    ('mamm', 'mère', 'nom', 'f', 'mammoù'),
-    ('penn', 'tête', 'nom', 'm', 'pennoù'),
-    ('gwir', 'vrai', 'adjectif', NULL, NULL),
-    ('levr', 'livre', 'nom', 'm', 'levrioù'),
-    ('c''hoar', 'sœur', 'nom', 'f', 'c''hoarezed'),
-    ('familh', 'famille', 'nom', 'f', 'familhoù'),
-    ('anv', 'nom', 'nom', 'm', 'anvioù'),
-    ('breur', 'frère', 'nom', 'm', 'breudeur'),
-    ('gouel', 'fête', 'nom', 'm', 'gouelioù'),
-    ('diaoul', 'diable', 'nom', 'm', 'diaouled'),
-    ('skol', 'école', 'nom', 'f', 'skolioù'),
-    ('kan', 'chant', 'nom', 'm', 'kanoù'),
-    ('kann', 'bagarre', 'nom', 'm', 'kannoù'),
-    ('mel', 'miel', 'nom', 'm', NULL),
-    ('maez', 'campagne', 'nom', 'm', 'maezioù'),
-    ('tud', 'gens', 'nom', 'pl', NULL),
-    ('mor', 'mer', 'nom', 'm', 'morioù'),
-    ('prenestr', 'fenêtre', 'nom', 'm', 'prenestroù'),
-    ('gwezh', 'fois', 'nom', 'f', 'gwezhioù'),
-    ('mouezh', 'voix', 'nom', 'f', 'mouezhioù'),
-    ('hir', 'long', 'adjectif', NULL, NULL),
-    ('hegarat', 'aimable', 'adjectif', NULL, NULL),
-    ('plasenn', 'place', 'nom', 'f', 'plasennoù'),
-    ('skuizh', 'fatigué', 'adjectif', NULL, NULL),
-    ('pell', 'loin', 'adjectif', NULL, NULL),
-    ('bro', 'pays', 'nom', 'f', 'broioù'),
-    ('straed', 'rue', 'nom', 'f', 'straedoù'),
-    ('ti-post', 'poste', 'nom', 'm', 'tiez-post'),
-    ('yaouank', 'jeune', 'adjectif', NULL, NULL),
-    ('tenn', 'difficile', 'adjectif', NULL, NULL),
-    ('studier', 'étudiant', 'nom', 'm', 'studierien'),
-    ('plac''h', 'fille', 'nom', 'f', 'merc''hed'),
-    ('micher', 'métier', 'nom', 'f', 'micherioù'),
-    ('kozh', 'vieux', 'adjectif', NULL, NULL),
-    ('glav', 'pluie', 'nom', 'm', 'glaveier'),
-    ('brav', 'beau', 'adjectif', NULL, NULL),
-    ('bloaz', 'année', 'nom', 'm', 'bloavezhioù'),
-    ('matematikoù', 'mathématiques', 'nom', 'pl', NULL),
-    ('bed', 'monde', 'nom', 'm', 'bedoù'),
-    ('amzer', 'temps', 'nom', 'f', 'amzerioù'),
-    ('gwreg', 'épouse', 'nom', 'f', 'gwragez');
+    ('gwir', 'vrai'),
+    ('hir', 'long'),
+    ('hegarat', 'aimable'),
+    ('skuizh', 'fatigué'),
+    ('yaouank', 'jeune'),
+    ('tenn', 'difficile'),
+    ('pell', 'loin', 'adjectif');
 
-INSERT INTO déclencheurs (mot, mutation, critère_genre, critère_pl)
+INSERT INTO noms (breton, français, genre, pluriel)
 VALUES
-    ('da', 'adoucissante', NULL, NULL),
-    ('ma', 'spirante', 'f', NULL),
-    ('e', 'adoucissante', NULL, NULL),
-    ('he', 'spirante', NULL, NULL),
-    ('ho', 'durcissante', NULL, NULL),
-    ('hon', 'spirante', NULL, NULL),
-    ('o', 'mixte', NULL, NULL),
-    ('war', 'adoucissante', NULL, NULL),
-    ('a', 'adoucissante', NULL, NULL),
-    ('en', 'adoucissante', NULL, NULL),
-    ('ur', 'adoucissante', NULL, NULL),
-    ('daou', 'adoucissante', NULL, NULL),
-    ('div', 'adoucissante', NULL, NULL),
-    ('re', 'adoucissante', NULL, NULL),
-    ('tri', 'spirante', NULL, NULL),
-    ('teir', 'spirante', NULL, NULL),
-    ('pevar', 'spirante', NULL, NULL),
-    ('peder', 'spirante', NULL, NULL),
-    ('nav', 'spirante', NULL, NULL),
-    ('ar', 'adoucissante', NULL, NULL),
-    ('an', 'adoucissante', 'f', NULL),
-    ('ur', 'adoucissante', 'f', NULL),
-    ('un', 'adoucissante', 'f', NULL);
+    ('tad', 'père', 'm', 'tadoù'),
+    ('ti', 'maison', 'm', 'tiez'),
+    ('mamm', 'mère', 'f', 'mammoù'),
+    ('penn', 'tête', 'm', 'pennoù'),
+    ('levr', 'livre', 'm', 'levrioù'),
+    ('c''hoar', 'sœur', 'f', 'c''hoarezed'),
+    ('familh', 'famille', 'f', 'familhoù'),
+    ('anv', 'nom', 'm', 'anvioù'),
+    ('breur', 'frère', 'm', 'breudeur'),
+    ('gouel', 'fête', 'm', 'gouelioù'),
+    ('diaoul', 'diable', 'm', 'diaouled'),
+    ('skol', 'école', 'f', 'skolioù'),
+    ('kan', 'chant', 'm', 'kanoù'),
+    ('kann', 'bagarre', 'm', 'kannoù'),
+    ('mel', 'miel', 'm', NULL),
+    ('maez', 'campagne', 'm', 'maezioù'),
+    ('tud', 'gens', 'pl', NULL),
+    ('mor', 'mer', 'm', 'morioù'),
+    ('prenestr', 'fenêtre', 'm', 'prenestroù'),
+    ('gwezh', 'fois', 'f', 'gwezhioù'),
+    ('mouezh', 'voix', 'f', 'mouezhioù'),
+    ('plasenn', 'place', 'f', 'plasennoù'),
+    ('bro', 'pays', 'f', 'broioù'),
+    ('straed', 'rue', 'f', 'straedoù'),
+    ('ti-post', 'poste', 'm', 'tiez-post'),
+    ('studier', 'étudiant', 'm', 'studierien'),
+    ('plac''h', 'fille', 'f', 'merc''hed'),
+    ('micher', 'métier', 'f', 'micherioù'),
+    ('glav', 'pluie', 'm', 'glaveier'),
+    ('bloaz', 'année', 'm', 'bloavezhioù'),
+    ('matematikoù', 'mathématiques', 'pl', NULL),
+    ('bed', 'monde', 'm', 'bedoù'),
+    ('amzer', 'temps', 'f', 'amzerioù'),
+    ('gwreg', 'épouse', 'f', 'gwragez');
+
+INSERT INTO déclencheurs (mot, mutation, critère_genre)
+VALUES
+    -- Les articles (en fonction du mot suivant)
+    ('ar', 'adoucissante', 'f'),
+    ('an', 'adoucissante', 'f'),
+    ('al', 'adoucissante', 'f'),
+    ('ur', 'adoucissante', 'f'),
+    ('un', 'adoucissante', 'f'),
+    ('ul', 'adoucissante', 'f'),
+    -- L'exception des hommes au pluriel
+    ('ar', 'adoucissante', 'm'), 
+
+    -- Les pronoms possessifs (peu importe le mot suivant)
+    ('ma', 'spirante', NULL),    -- mon
+    ('va', 'spirante', NULL),    -- mon
+    ('e', 'adoucissante', NULL), -- son/sa (à lui)
+    ('he', 'spirante', NULL),    -- son/sa (à elle)
+    ('ho', 'durcissante', NULL), -- votre
+    ('o', 'spirante', NULL),     -- leur
+
+    -- Les nombres (peu importe le mot suivant)
+    ('daou', 'adoucissante', NULL),
+    ('div', 'adoucissante', NULL),
+    ('tri', 'spirante', NULL),
+    ('teir', 'spirante', NULL),
+    ('pevar', 'spirante', NULL),
+    ('peder', 'spirante', NULL),
+    ('nav', 'spirante', NULL),
+
+    -- Les prépositions
+    ('da', 'adoucissante', NULL),
+    ('war', 'adoucissante', NULL),
+    ('a', 'adoucissante', NULL),
+    ('dre', 'adoucissante', NULL),
+    ('dindan', 'adoucissante', NULL);
+    
 
 SELECT
-    déclencheurs.mot || ' ' || breton ||' = ?' AS question,
-    déclencheurs.mot || ' ' ||
-    CASE déclencheurs.mutation
-        WHEN 'spirante' THEN mutations.spirante
-        WHEN 'adoucissante' THEN mutations.adoucissante
-        WHEN 'durcissante' THEN mutations.durcissante
-    END || SUBSTR(lexemes.breton, 2) AS réponse
-FROM lexemes
-JOIN mutations
-    ON SUBSTR(breton, 1, 1) = mutations.lettre_initiale
-JOIN déclencheurs
-    ON 1=1 -- (Astuce pour forcer le croisement de tous les mots avec tous les déclencheurs)
+    décl.mot || ' + ' || noms.breton ||' = ?' AS question,
+    -- Variante avec CONCAT : CONCAT(décl.mot, ' + ', noms.breton, ' = ?') AS question,
+    décl.mot || ' + ' ||
+    CASE décl.mutation
+        WHEN 'spirante' THEN mut.spirante
+        WHEN 'adoucissante' THEN mut.adoucissante
+        WHEN 'durcissante' THEN mut.durcissante
+    END || SUBSTR(noms.breton, 2) AS réponse
+FROM noms
+JOIN mutations mut
+    ON SUBSTR(noms.breton, 1, 1) = mut.lettre_initiale
+JOIN déclencheurs décl
+    -- Cross join (produit cartésien) -> force le croisement de tous les mots avec tous les déclencheurs
+    ON 1=1
 
-    WHERE 
-        -- 1. La règle d'or pour le genre : ça correspond, OU BIEN le déclencheur s'en fiche (IS NULL)
-        (déclencheurs.critère_genre = lexemes.genre OR déclencheurs.critère_genre IS NULL)
+    -- Filtrage
+    WHERE
+        -- Si le déclencheur exige un genre, celui-ci doit correspondre au genre du nom
+        (décl.critère_genre = noms.genre OR décl.critère_genre IS NULL)
         
-        -- 2. La règle d'or pour le pluriel : ça correspond, OU BIEN le déclencheur s'en fiche
-        AND (déclencheurs.critère_pl = lexemes.pluriel OR déclencheurs.critère_pl IS NULL)
+        -- Si le déclencheur exige un nombre, celui-ci doit correspondre au nombre du nom
+        AND (décl.critère_pl = noms.pluriel OR décl.critère_pl IS NULL)
         
-        -- 3. On ne garde que les cas où la lettre subit bien la mutation demandée
-        AND CASE déclencheurs.mutation
-            WHEN 'spirante' THEN mutations.spirante
-            WHEN 'adoucissante' THEN mutations.adoucissante
-            WHEN 'durcissante' THEN mutations.durcissante
+        -- On ne garde que les cas où la lettre subit bien la mutation demandée
+        AND CASE décl.mutation
+            WHEN 'spirante' THEN mut.spirante
+            WHEN 'adoucissante' THEN mut.adoucissante
+            WHEN 'durcissante' THEN mut.durcissante
     END IS NOT NULL;
 
 
+-- Nom + adjectif : mamm + brav = ?
 SELECT
-    déclencheurs.mot || ' ' || breton ||' = ?' AS question,
-    déclencheurs.mot || ' ' || mutations.adoucissante || SUBSTR(breton, 2) AS réponse
-FROM lexèmes
-JOIN mutations
-    ON SUBSTR(breton, 1, 1) = mutations.lettre_initiale
+    noms.breton || ' + ' || adjectifs.breton ||' = ?' AS question,
+    -- Variante avec CONCAT : CONCAT(noms.breton, ' + ', adjectifs.breton, ' = ?') AS question,
+    noms.breton || ' + ' || mut.adoucissante || SUBSTR(adjectifs.breton, 2) AS réponse
+FROM adjectifs
+JOIN noms
+    ON noms.genre = 'f'
+JOIN mutations mut
+    ON SUBSTR(adjectifs.breton, 1, 1) = mut.lettre_initiale
 WHERE
-    lexemes.genre LIKE 'f' AND déclencheurs.mot = 'ar' AND mutations.adoucissante IS NOT NULL;
+    mut.adoucissante IS NOT NULL;
+
+
+-- Articles définis (an/al/ar) et indéfinis (un/ul/ur)
+WITH ARTICLES_DEF_INDEF AS (
+    SELECT
+        breton,
+        genre,
+        -- Article défini (an/al/ar)
+        CASE
+            WHEN LOWER(SUBSTR(breton, 1, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'an'
+            -- Variante avec LEFT : WHEN LOWER(LEFT(breton, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'an'
+            WHEN LOWER(breton) LIKE 'l%' THEN 'al'
+            ELSE 'ar'
+        END AS article_def,
+
+        -- Article indéfini (un/ul/ur)
+        CASE
+            WHEN LOWER(SUBSTR(breton, 1, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'un'
+            WHEN LOWER(breton) LIKE 'l%' THEN 'ul'
+            ELSE 'ur'
+        END AS article_indef
+    FROM noms
+)
+
+SELECT
+    -- # Article + nom
+    art.breton,
+
+    -- ## Article défini (an/al/ar)
+    -- ### Question - ex: "an bro = ?" / "ar penn = ?"
+    art.article_def || ' + ' || art.breton || ' = ?' AS question_def,
+    
+    -- ### Réponse
+    art.article_def || ' ' || 
+    CASE 
+        WHEN art.genre = 'f' AND mut.adoucissante IS NOT NULL 
+        -- Ex ('bro' -> 'vro') : 'v' || 'ro'
+        THEN mut.adoucissante || SUBSTR(art.breton, 2)
+
+        -- Ex 'penn' -> 'penn' (masculin + 'p'.adoucissante = NULL)
+        ELSE art.breton 
+    END AS reponse_def,
+
+    -- ## Article indéfini (un/ul/ur)
+    -- ### Question - ex: "un bro = ?" / "ur penn = ?"
+    art.article_indef || ' + ' || art.breton || ' = ?' AS question_indefini,
+
+    -- ### Réponse
+    art.article_indef || ' ' || 
+    CASE 
+        WHEN art.genre = 'f' AND mut.adoucissante IS NOT NULL
+        -- Ex ('bro' -> 'vro') : 'v' || 'ro'
+        THEN mut.adoucissante || SUBSTR(art.breton, 2)
+
+        -- Ex 'penn' -> 'penn' (masculin + 'p'.adoucissante = NULL)
+        ELSE art.breton 
+    END AS reponse_indefini
+
+FROM ARTICLES_DEF_INDEF art
+LEFT JOIN mutations mut 
+    ON LOWER(SUBSTR(art.breton, 1, 1)) = mut.lettre_initiale;
