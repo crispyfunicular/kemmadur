@@ -5,7 +5,7 @@
 SELECT
     décl.mot || ' + ' || noms.breton ||' = ?' AS question,
     -- Variante avec CONCAT : CONCAT(décl.mot, ' + ', noms.breton, ' = ?') AS question,
-    décl.mot || ' + ' ||
+    décl.mot || ' ' ||
     CASE décl.mutation
         WHEN 'spirante' THEN mut.spirante
         WHEN 'adoucissante' THEN mut.adoucissante
@@ -41,7 +41,7 @@ JOIN déclencheurs décl
 SELECT
     noms.breton || ' + ' || adjectifs.breton ||' = ?' AS question,
     -- Variante avec CONCAT : CONCAT(noms.breton, ' + ', adjectifs.breton, ' = ?') AS question,
-    noms.breton || ' + ' || mut.adoucissante || SUBSTR(adjectifs.breton, 2) AS réponse
+    noms.breton || ' ' || mut.adoucissante || SUBSTR(adjectifs.breton, 2) AS réponse
 FROM adjectifs
 JOIN noms
     ON noms.genre = 'f'
