@@ -6,15 +6,16 @@ Outil pour s'entraîner aux mutations initiales en breton (*kemmadurioù*). Le p
 
 ## Description
 
-Les mutations initiales (*kemmadurioù*) sont l'un des aspects les plus caractéristiques — et les plus redoutés — de la morphophonologie bretonne. La consonne initiale d'un mot est modifiée en fonction du mot grammatical qui le précède (articles, possessifs, prépositions, numéraux…).
+Les mutations initiales (*kemmadurioù*) sont l'un des aspects les plus caractéristiques de la morphophonologie bretonne. La consonne initiale d'un mot est modifiée en fonction du mot grammatical qui le précède (articles, possessifs, prépositions, numéraux…).
 
 Ce projet modélise ces mutations en SQL et génère automatiquement des questions d'entraînement :
-- **Déclencheur + nom** → forme mutée (ex : `da + tad = da dad`)
-- **Nom féminin + adjectif** → adjectif muté (ex : `mamm + brav = mamm vrav`)
-- **Article + nom** → article correct + mutation éventuelle (ex : `ar + bro = ar vro`)
-- **Article + nom + adjectif** → mutations combinées (ex : `ur + mamm + brav = ur vamm vrav`)
+- **Déclencheur + nom** → forme mutée (ex : `da + tad = da dad` [à/pour + père])
+- **Nombre + nom** → forme mutée (ex : `daou + tad = daou dad` [deux + père])
+- **Nom féminin + adjectif** → adjectif muté (ex : `mamm + brav = mamm vrav` [mère + beau])
+- **Article + nom** → article correct + mutation éventuelle (ex : `ar + bro = ar vro` [le/la + pays])
+- **Article + nom + adjectif** → mutations combinées (ex : `ur + mamm + brav = ur vamm vrav` [un/une + mère + beau])
 
-Un quiz interactif en ligne de commande (Python + Rich) permet de s'entraîner sur ces combinaisons, à l'image de [Magister Conjugationis](https://github.com/crispyfunicular/magister_conjugationis/).
+Un quiz interactif est disponible en [version web](https://crispyfunicular.github.io/kemmadur/) et en ligne de commande (Python + Rich), à l'image de [Magister Conjugationis](https://github.com/crispyfunicular/magister_conjugationis/).
 
 ## Rappel : les mutations bretonnes
 
@@ -52,6 +53,19 @@ sqlite3 kemmadur.db < tables.sql
 
 ## Utilisation
 
+### Version web
+
+Accessible directement à l'adresse : https://crispyfunicular.github.io/kemmadur/
+
+Fonctionnalités :
+- Choix des catégories (déclencheurs, nombres, nom+adjectif, articles, article+nom+adjectif)
+- Traduction française affichée sous chaque question
+- Bouton **Passer** pour sauter une question
+- Bouton **Indice** affichant le tableau des mutations
+- Possibilité de réessayer après une mauvaise réponse (demi-point)
+
+### Version CLI
+
 Lancer le quiz interactif :
 
 ```bash
@@ -74,11 +88,18 @@ Fin de l'exercice ! Votre score : 2 / 2
 
 ```
 kemmadur/
-├── kemmadur.py         # Script principal (quiz interactif CLI)
+├── kemmadur.py         # Quiz interactif CLI (Python + Rich)
 ├── tables.sql          # Schéma + données (noms, adjectifs, déclencheurs, mutations)
 ├── requetes.sql        # Requêtes SQL nommées (chargées via aiosql)
 ├── kemmadur.db         # Base SQLite pré-remplie
-├── anki/               # Deck Anki source
+├── scripts/
+│   └── export_flashcards.py  # Génère web/flashcards.js depuis la BDD
+├── web/
+│   ├── index.html      # Quiz web (Alpine.js + Tailwind)
+│   ├── app.js          # Logique du quiz
+│   └── flashcards.js   # Données exportées
+├── .github/workflows/
+│   └── static.yml      # Déploiement GitHub Pages
 ├── README.md
 └── LICENSE
 ```
@@ -88,10 +109,13 @@ kemmadur/
 - [x] Modélisation des mutations (lénition, spirantisation, durcissement, mixte)
 - [x] Base de données SQL + requêtes de génération de questions
 - [x] Quiz interactif CLI en Python
-- [ ] Choix du type d'exercice (déclencheurs, adjectifs, articles, complet)
+- [x] Interface web (GitHub Pages)
+- [x] Choix du type d'exercice (déclencheurs, nombres, adjectifs, articles, complet)
+- [x] Indices de traduction française sous chaque question
+- [x] Bouton « Passer » et bouton « Indice » (tableau des mutations)
+- [x] Demi-point si réponse correcte après erreur
 - [ ] Système d'indices progressifs (genre, catégorie de mutation, règle, réponse)
 - [ ] Mode traduction (forme mutée → traduction française)
-- [ ] Interface web
 
 ## Licence
 
