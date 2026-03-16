@@ -1,3 +1,11 @@
+-- Mutations
+CREATE TABLE IF NOT EXISTS mutations (
+    lettre_initiale TEXT PRIMARY KEY,
+    durcissante TEXT,
+    adoucissante TEXT,
+    spirante TEXT
+);
+
 INSERT INTO mutations (lettre_initiale, durcissante, adoucissante, spirante)
 VALUES
     ('g', 'k', 'c''h', NULL),
@@ -7,9 +15,14 @@ VALUES
     ('t', NULL, 'd', 'z'),
     ('m', NULL, 'v', NULL),
     ('b', 'p', 'v', NULL),
-    ('p', NULL, NULL, 'f'),
-    ('kozh', 'vieux', NULL),
-    ('brav', 'beau', NULL);
+    ('p', NULL, NULL, 'f');
+
+-- Adjectifs
+CREATE TABLE IF NOT EXISTS adjectifs (
+    id TEXT PRIMARY KEY,
+    breton TEXT,
+    français TEXT
+);
 
 INSERT INTO adjectifs (breton, français)
 VALUES
@@ -19,7 +32,19 @@ VALUES
     ('skuizh', 'fatigué'),
     ('yaouank', 'jeune'),
     ('tenn', 'difficile'),
-    ('pell', 'loin', 'adjectif');
+    ('pell', 'loin'),
+    ('kozh', 'vieux'),
+    ('brav', 'beau');
+
+
+-- Noms
+CREATE TABLE IF NOT EXISTS noms (
+    id INTEGER PRIMARY KEY,
+    breton TEXT,
+    français TEXT,
+    genre TEXT,
+    pluriel TEXT
+);
 
 INSERT INTO noms (breton, français, genre, pluriel)
 VALUES
@@ -57,6 +82,16 @@ VALUES
     ('bed', 'monde', 'm', 'bedoù'),
     ('amzer', 'temps', 'f', 'amzerioù'),
     ('gwreg', 'épouse', 'f', 'gwragez');
+
+
+-- Déclencheurs
+CREATE TABLE IF NOT EXISTS déclencheurs (
+    id INTEGER PRIMARY KEY,
+    mot TEXT,
+    mutation TEXT,
+    critère_genre TEXT,
+    critère_pl TEXT
+);
 
 INSERT INTO déclencheurs (mot, mutation, critère_genre)
 VALUES
