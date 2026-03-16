@@ -93,38 +93,44 @@ CREATE TABLE IF NOT EXISTS déclencheurs (
     critère_pl TEXT
 );
 
-INSERT INTO déclencheurs (mot, mutation, critère_genre)
+INSERT INTO déclencheurs (mot, mutation, critère_genre, critère_pl)
 VALUES
     -- Les articles (en fonction du mot suivant)
-    ('ar', 'adoucissante', 'f'),
-    ('an', 'adoucissante', 'f'),
-    ('al', 'adoucissante', 'f'),
-    ('ur', 'adoucissante', 'f'),
-    ('un', 'adoucissante', 'f'),
-    ('ul', 'adoucissante', 'f'),
-    -- L'exception des hommes au pluriel
-    ('ar', 'adoucissante', 'm'), 
+    ('ar', 'adoucissante', 'f', NULL),
+    ('an', 'adoucissante', 'f', NULL),
+    ('al', 'adoucissante', 'f', NULL),
+    ('ur', 'adoucissante', 'f', NULL),
+    ('un', 'adoucissante', 'f', NULL),
+    ('ul', 'adoucissante', 'f', NULL),
+    -- L'exception des hommes au pluriel (TODO critère_pl)
+    -- ('ar', 'adoucissante', 'm', 'ed'),
 
     -- Les pronoms possessifs (peu importe le mot suivant)
-    ('ma', 'spirante', NULL),    -- mon
-    ('va', 'spirante', NULL),    -- mon
-    ('e', 'adoucissante', NULL), -- son/sa (à lui)
-    ('he', 'spirante', NULL),    -- son/sa (à elle)
-    ('ho', 'durcissante', NULL), -- votre
-    ('o', 'spirante', NULL),     -- leur
-
-    -- Les nombres (peu importe le mot suivant)
-    ('daou', 'adoucissante', NULL),
-    ('div', 'adoucissante', NULL),
-    ('tri', 'spirante', NULL),
-    ('teir', 'spirante', NULL),
-    ('pevar', 'spirante', NULL),
-    ('peder', 'spirante', NULL),
-    ('nav', 'spirante', NULL),
+    ('ma', 'spirante', NULL, NULL),    -- mon
+    ('va', 'spirante', NULL, NULL),    -- mon
+    ('e', 'adoucissante', NULL, NULL), -- son/sa (à lui)
+    ('he', 'spirante', NULL, NULL),    -- son/sa (à elle)
+    ('ho', 'durcissante', NULL, NULL), -- votre
+    ('o', 'spirante', NULL, NULL),     -- leur
 
     -- Les prépositions
-    ('da', 'adoucissante', NULL),
-    ('war', 'adoucissante', NULL),
-    ('a', 'adoucissante', NULL),
-    ('dre', 'adoucissante', NULL),
-    ('dindan', 'adoucissante', NULL);
+    ('da', 'adoucissante', NULL, NULL);
+    -- TODO : prépositions à réintégrer avec des critères plus fins
+    -- ('war', 'adoucissante', NULL, NULL),
+    -- ('a', 'adoucissante', NULL, NULL),
+    -- ('dre', 'adoucissante', NULL, NULL),
+    -- ('dindan', 'adoucissante', NULL, NULL);
+
+-- TODO : Les nombres (genre + nom comptable uniquement)
+-- Nécessite de concilier critère_pl :
+--   'ed' pour ar masculin (pluriel en -ed)
+--   '%' pour les nombres (tout pluriel)
+-- INSERT INTO déclencheurs (mot, mutation, critère_genre, critère_pl)
+-- VALUES
+--     ('daou', 'adoucissante', 'm', '%'),   -- deux (masc.)
+--     ('div', 'adoucissante', 'f', '%'),     -- deux (fém.)
+--     ('tri', 'spirante', 'm', '%'),         -- trois (masc.)
+--     ('teir', 'spirante', 'f', '%'),        -- trois (fém.)
+--     ('pevar', 'spirante', 'm', '%'),       -- quatre (masc.)
+--     ('peder', 'spirante', 'f', '%'),       -- quatre (fém.)
+--     ('nav', 'spirante', NULL, '%');         -- neuf (les deux genres)

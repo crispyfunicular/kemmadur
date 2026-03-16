@@ -11,7 +11,27 @@ SELECT
         WHEN 'spirante' THEN mut.spirante
         WHEN 'adoucissante' THEN mut.adoucissante
         WHEN 'durcissante' THEN mut.durcissante
-    END || SUBSTR(noms.breton, 2) AS réponse
+    END || SUBSTR(noms.breton, 2) AS réponse,
+    -- Indice : traduction française
+    CASE décl.mot
+        WHEN 'ar' THEN 'le/la'  WHEN 'an' THEN 'le/la'  WHEN 'al' THEN 'le/la'
+        WHEN 'ur' THEN 'un/une' WHEN 'un' THEN 'un/une'  WHEN 'ul' THEN 'un/une'
+        WHEN 'ma' THEN 'mon/ma' WHEN 'va' THEN 'mon/ma'
+        WHEN 'e'  THEN 'son/sa (à lui)'
+        WHEN 'he' THEN 'son/sa (à elle)'
+        WHEN 'ho' THEN 'votre'
+        WHEN 'o'  THEN 'leur'
+        WHEN 'da' THEN 'à/pour'
+        WHEN 'war' THEN 'sur'
+        WHEN 'a' THEN 'de'
+        WHEN 'dre' THEN 'par/à travers'
+        WHEN 'dindan' THEN 'sous'
+        WHEN 'daou' THEN 'deux'  WHEN 'div' THEN 'deux'
+        WHEN 'tri' THEN 'trois' WHEN 'teir' THEN 'trois'
+        WHEN 'pevar' THEN 'quatre' WHEN 'peder' THEN 'quatre'
+        WHEN 'nav' THEN 'neuf'
+        ELSE décl.mot
+    END || ' + ' || noms.français AS indice
 FROM noms
 JOIN mutations mut
     ON SUBSTR(noms.breton, 1, 1) = mut.lettre_initiale
@@ -24,8 +44,8 @@ JOIN déclencheurs décl
         -- Si le déclencheur exige un genre, celui-ci doit correspondre au genre du nom
         (décl.critère_genre = noms.genre OR décl.critère_genre IS NULL)
         
-        -- Si le déclencheur exige un nombre, celui-ci doit correspondre au nombre du nom
-        AND (décl.critère_pl = noms.pluriel OR décl.critère_pl IS NULL)
+        -- Si le déclencheur exige un nom comptable, celui-ci doit avoir un pluriel
+        AND (décl.critère_pl IS NULL OR noms.pluriel IS NOT NULL)
         
         -- On ne garde que les cas où la lettre subit bien la mutation demandée
         AND CASE décl.mutation
@@ -44,7 +64,8 @@ JOIN déclencheurs décl
 SELECT
     noms.breton || ' + ' || adjectifs.breton || ' = ?' AS question,
     -- Variante avec CONCAT : CONCAT(noms.breton, ' + ', adjectifs.breton, ' = ?') AS question,
-    noms.breton || ' ' || mut.adoucissante || SUBSTR(adjectifs.breton, 2) AS réponse
+    noms.breton || ' ' || mut.adoucissante || SUBSTR(adjectifs.breton, 2) AS réponse,
+    noms.français || ' + ' || adjectifs.français AS indice
 FROM adjectifs
 JOIN noms
     ON noms.genre = 'f'
@@ -58,7 +79,8 @@ UNION ALL
 -- Noms masculins : pas de mutation (piège)
 SELECT
     noms.breton || ' + ' || adjectifs.breton || ' = ?' AS question,
-    noms.breton || ' ' || adjectifs.breton AS réponse
+    noms.breton || ' ' || adjectifs.breton AS réponse,
+    noms.français || ' + ' || adjectifs.français AS indice
 FROM adjectifs
 JOIN noms
     ON noms.genre = 'm';
@@ -73,6 +95,7 @@ WITH ARTICLES AS (
     -- Article défini (an/al/ar)
     SELECT
         breton,
+        français,
         genre,
         CASE
             WHEN LOWER(SUBSTR(breton, 1, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'an'
@@ -87,6 +110,7 @@ WITH ARTICLES AS (
     -- Article indéfini (un/ul/ur)
     SELECT
         breton,
+        français,
         genre,
         CASE
             WHEN LOWER(SUBSTR(breton, 1, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'un'
@@ -106,7 +130,11 @@ SELECT
         THEN mut.adoucissante || SUBSTR(art.breton, 2)
         -- Ex 'penn' -> 'penn' (masculin + 'p'.adoucissante = NULL)
         ELSE art.breton
-    END AS réponse
+    END AS réponse,
+    CASE art.article
+        WHEN 'ar' THEN 'le/la' WHEN 'an' THEN 'le/la' WHEN 'al' THEN 'le/la'
+        WHEN 'ur' THEN 'un/une' WHEN 'un' THEN 'un/une' WHEN 'ul' THEN 'un/une'
+    END || ' + ' || art.français AS indice
 FROM ARTICLES art
 LEFT JOIN mutations mut
     ON LOWER(SUBSTR(art.breton, 1, 1)) = mut.lettre_initiale;
@@ -122,6 +150,7 @@ WITH ARTICLES AS (
     -- Article défini (an/al/ar)
     SELECT
         breton,
+        français,
         genre,
         CASE
             WHEN LOWER(SUBSTR(breton, 1, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'an'
@@ -135,6 +164,7 @@ WITH ARTICLES AS (
     -- Article indéfini (un/ul/ur)
     SELECT
         breton,
+        français,
         genre,
         CASE
             WHEN LOWER(SUBSTR(breton, 1, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'un'
@@ -166,7 +196,11 @@ SELECT
         -- Ex ('brav' -> 'vrav') : 'v' || 'rav'
         THEN mut_adj.adoucissante || SUBSTR(adj.breton, 2)
         ELSE adj.breton
-    END AS réponse
+    END AS réponse,
+    CASE art.article
+        WHEN 'ar' THEN 'le/la' WHEN 'an' THEN 'le/la' WHEN 'al' THEN 'le/la'
+        WHEN 'ur' THEN 'un/une' WHEN 'un' THEN 'un/une' WHEN 'ul' THEN 'un/une'
+    END || ' + ' || art.français || ' + ' || adj.français AS indice
 FROM ARTICLES art
 JOIN adjectifs adj
     ON 1=1
@@ -174,4 +208,3 @@ LEFT JOIN mutations mut_nom
     ON SUBSTR(art.breton, 1, 1) = mut_nom.lettre_initiale
 LEFT JOIN mutations mut_adj
     ON SUBSTR(adj.breton, 1, 1) = mut_adj.lettre_initiale;
-
