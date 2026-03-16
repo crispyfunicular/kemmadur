@@ -1,4 +1,4 @@
--- @query declencheurs
+-- name: declencheurs()
 -- ==============================================================================
 -- Déclencheurs (nombres, prépositions, possessifs...)
 -- ==============================================================================
@@ -35,7 +35,7 @@ JOIN déclencheurs décl
     END IS NOT NULL;
 
 
--- @query nom_adjectif
+-- name: nom_adjectif()
 -- ==============================================================================
 -- Nom + adjectif : "mamm + brav = ?"
 -- ==============================================================================
@@ -64,7 +64,7 @@ JOIN noms
     ON noms.genre = 'm';
 
 
--- @query articles
+-- name: articles()
 -- ==============================================================================
 -- Articles définis (an/al/ar) et indéfinis (un/ul/ur)
 -- ==============================================================================
@@ -112,7 +112,7 @@ LEFT JOIN mutations mut
     ON LOWER(SUBSTR(art.breton, 1, 1)) = mut.lettre_initiale;
 
 
--- @query article_nom_adj
+-- name: article_nom_adj()
 -- ==============================================================================
 -- Article + nom + adjectif : "ur + mamm + brav = ?"
 -- ==============================================================================

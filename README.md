@@ -41,7 +41,7 @@ Un quiz interactif en ligne de commande (Python + Rich) permet de s'entraîner s
 ```bash
 git clone https://github.com/crispyfunicular/kemmadur.git
 cd kemmadur
-pip install rich
+pip install rich aiosql
 ```
 
 La base SQLite `kemmadur.db` est fournie prête à l'emploi. Pour la recréer depuis les fichiers source :
@@ -76,7 +76,7 @@ Fin de l'exercice ! Votre score : 2 / 2
 kemmadur/
 ├── kemmadur.py         # Script principal (quiz interactif CLI)
 ├── tables.sql          # Schéma + données (noms, adjectifs, déclencheurs, mutations)
-├── requetes.sql        # Requêtes SQL (tagées @query pour chargement Python)
+├── requetes.sql        # Requêtes SQL nommées (chargées via aiosql)
 ├── kemmadur.db         # Base SQLite pré-remplie
 ├── anki/               # Deck Anki source
 ├── README.md
