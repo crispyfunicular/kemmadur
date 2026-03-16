@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kemmadur — Mutations bretonnes</title>
+  <meta name="description"
+    content="Entraînez-vous aux mutations initiales bretonnes (kemmadurioù) : lénition, spirantisation, durcissement." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ["Inter", "sans-serif"] },
+          colors: {
+            ocean: "#1e3a5f",
+            sand: "#f5f0e8",
+            kelp: "#2d5a3d",
+            ermine: "#fafaf7",
+            slate: "#334155",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+      background: linear-gradient(135deg, #f5f0e8 0%, #e8e0d4 100%);
+      min-height: 100vh;
+    }
+
+    [x-cloak] { display: none !important; }
+
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(8px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="min-h-screen flex flex-col" x-data="kemmadurApp()" x-cloak>
+
+    <!-- Header -->
+    <header class="px-6 py-6">
+      <div class="mx-auto max-w-2xl flex items-center justify-between">
+        <button type="button" class="text-left" @click="screen = 'setup'">
+          <p class="text-xs uppercase tracking-[0.3em] text-ocean/60">Kemmadur</p>
+          <h1 class="text-2xl font-bold text-ocean">Mutations bretonnes</h1>
+        </button>
+        <a class="text-sm text-slate/60 hover:text-slate transition"
+          href="https://github.com/crispyfunicular/kemmadur" target="_blank" rel="noreferrer">
+          GitHub ↗
+        </a>
+      </div>
+    </header>
+
+    <main class="flex-1 px-6 pb-16">
+      <div class="mx-auto max-w-2xl flex flex-col gap-8">
+
+        <!-- ═══════════ SETUP ═══════════ -->
+        <section class="card rounded-2xl p-8 shadow-sm" x-show="screen === 'setup'">
+          <h2 class="text-lg font-semibold text-ocean">Préparer la session</h2>
+          <p class="mt-1 text-sm text-slate/60">Choisissez les catégories et le nombre de questions.</p>
+
+          <div class="mt-6 space-y-3">
+            <p class="text-sm font-medium text-slate">Catégories</p>
+            <div class="grid gap-2 sm:grid-cols-2">
+              <template x-for="cat in categories" :key="cat.key">
+                <label
+                  class="flex items-start gap-3 rounded-xl border border-slate/10 bg-white/60 px-4 py-3 cursor-pointer transition hover:border-ocean/30"
+                  :class="selectedCategories.includes(cat.key) ? 'border-ocean/40 bg-ocean/5' : ''">
+                  <input type="checkbox" class="mt-1 h-4 w-4 accent-ocean" :value="cat.key"
+                    x-model="selectedCategories" />
+                  <div>
+                    <span class="text-sm font-medium text-slate" x-text="cat.label"></span>
+                    <span class="block text-xs text-slate/50" x-text="cat.desc"></span>
+                  </div>
+                </label>
+              </template>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <label class="block">
+              <span class="text-sm font-medium text-slate">Nombre de questions</span>
+              <input type="number" min="1" max="200"
+                class="mt-2 w-32 rounded-xl border border-slate/15 bg-white/80 px-4 py-2.5 text-lg focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"
+                x-model.number="questionCount" />
+            </label>
+            <p class="mt-2 text-xs text-slate/50">
+              <span x-text="totalAvailable"></span> questions disponibles
+            </p>
+          </div>
+
+          <div class="mt-8 flex items-center gap-3">
+            <button
+              class="rounded-full bg-ocean px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:-translate-y-0.5"
+              @click="startSession" :disabled="totalAvailable === 0">
+              Démarrer
+            </button>
+          </div>
+        </section>
+
+        <!-- ═══════════ QUIZ ═══════════ -->
+        <section class="card rounded-2xl p-8 shadow-sm" x-show="screen === 'quiz'">
+          <!-- Progress bar -->
+          <div class="mb-6">
+            <div class="flex items-center justify-between text-sm text-slate/60 mb-2">
+              <span>Question <span x-text="quiz.index + 1"></span> / <span
+                  x-text="quiz.questions.length"></span></span>
+              <span>Score : <span x-text="quiz.score"></span></span>
+            </div>
+            <div class="h-1.5 w-full rounded-full bg-slate/10">
+              <div class="h-1.5 rounded-full bg-ocean transition-all duration-300"
+                :style="`width: ${progress}%`"></div>
+            </div>
+          </div>
+
+          <template x-if="currentQuestion">
+            <div>
+              <!-- Question -->
+              <div class="rounded-xl border border-slate/10 bg-white/70 p-6 text-center">
+                <p class="text-2xl font-semibold text-ocean" x-text="currentQuestion.question"></p>
+              </div>
+
+              <!-- Input -->
+              <div class="mt-6" @keydown="handleKeydown($event)">
+                <input id="answer-input" type="text" autocomplete="off" spellcheck="false"
+                  class="w-full rounded-xl border border-slate/15 bg-white/80 px-4 py-3 text-lg text-center focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"
+                  :class="quiz.feedback ? (quiz.feedback.correct ? 'border-green-400 bg-green-50/50' : 'border-red-400 bg-red-50/50') : ''"
+                  placeholder="Votre réponse…" x-model="quiz.answer" :disabled="quiz.feedback !== null" />
+              </div>
+
+              <!-- Feedback -->
+              <div class="mt-4 text-center" x-show="quiz.feedback">
+                <template x-if="quiz.feedback && quiz.feedback.correct">
+                  <p class="text-lg font-semibold text-green-700">Mat tre ! ✓</p>
+                </template>
+                <template x-if="quiz.feedback && !quiz.feedback.correct">
+                  <div>
+                    <p class="text-lg font-semibold text-red-600">Fazi…</p>
+                    <p class="mt-1 text-sm text-slate/70">
+                      Réponse attendue : <span class="font-semibold text-ocean"
+                        x-text="quiz.feedback.expected"></span>
+                    </p>
+                  </div>
+                </template>
+                <button
+                  class="mt-4 rounded-full bg-ocean/10 px-5 py-2 text-sm font-medium text-ocean transition hover:bg-ocean/20"
+                  @click="nextQuestion">
+                  Continuer →
+                </button>
+              </div>
+
+              <!-- Buttons (before feedback) -->
+              <div class="mt-4 flex justify-center gap-3" x-show="!quiz.feedback">
+                <button
+                  class="rounded-full bg-ocean px-6 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+                  @click="submitAnswer">
+                  Valider
+                </button>
+              </div>
+            </div>
+          </template>
+        </section>
+
+        <!-- ═══════════ SUMMARY ═══════════ -->
+        <section class="card rounded-2xl p-8 shadow-sm" x-show="screen === 'summary'">
+          <div class="text-center">
+            <p class="text-xs uppercase tracking-[0.3em] text-ocean/60">Session terminée</p>
+            <p class="mt-3 text-4xl font-bold text-ocean">
+              <span x-text="quiz.score"></span> / <span x-text="quiz.questions.length"></span>
+            </p>
+            <p class="mt-1 text-sm text-slate/60"><span x-text="scorePercent"></span>% de réussite</p>
+          </div>
+
+          <!-- History -->
+          <div class="mt-8" x-show="quiz.history.length > 0">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate/50 mb-3">Historique</h3>
+            <ul class="space-y-2 max-h-80 overflow-y-auto">
+              <template x-for="(entry, i) in quiz.history" :key="i">
+                <li class="flex items-center justify-between gap-3 rounded-xl border border-slate/8 bg-white/60 px-4 py-3 text-sm">
+                  <div class="min-w-0">
+                    <span class="font-medium text-slate" x-text="entry.question"></span>
+                    <template x-if="!entry.correct">
+                      <span class="block text-xs text-red-500">
+                        Votre réponse : <span x-text="entry.given"></span> — Attendu : <span class="text-ocean font-medium" x-text="entry.expected"></span>
+                      </span>
+                    </template>
+                  </div>
+                  <span class="flex-shrink-0 text-lg" x-text="entry.correct ? '✓' : '✗'"
+                    :class="entry.correct ? 'text-green-600' : 'text-red-500'"></span>
+                </li>
+              </template>
+            </ul>
+          </div>
+
+          <div class="mt-8 flex justify-center">
+            <button
+              class="rounded-full bg-ocean px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:-translate-y-0.5"
+              @click="resetSession">
+              Nouvelle session
+            </button>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <footer class="px-6 pb-8 text-center text-xs text-slate/40">
+      <a href="https://github.com/crispyfunicular/kemmadur" target="_blank" rel="noreferrer"
+        class="hover:text-slate transition">Kemmadur</a>
+      — Entraînement aux mutations initiales bretonnes
+    </footer>
+  </div>
+
+  <script src="flashcards.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
