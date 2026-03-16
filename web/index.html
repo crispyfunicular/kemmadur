@@ -157,14 +157,25 @@
                     <button
                       class="mt-4 rounded-full bg-ocean/10 px-5 py-2 text-sm font-medium text-ocean transition hover:bg-ocean/20"
                       @click="nextQuestion">
-                      Continuer →
+                      Continuer
                     </button>
                   </div>
                 </template>
-                <template x-if="quiz.feedback && !quiz.feedback.correct">
+                <template x-if="quiz.feedback && !quiz.feedback.correct && !quiz.feedback.revealed">
                   <div>
                     <p class="text-lg font-semibold text-red-600">Fazi…</p>
                     <p class="mt-1 text-sm text-slate/50 italic">Réessayez…</p>
+                  </div>
+                </template>
+                <template x-if="quiz.feedback && quiz.feedback.revealed">
+                  <div>
+                    <p class="text-lg font-semibold text-orange-600">Réponse :</p>
+                    <p class="mt-1 text-xl font-bold text-ocean" x-text="quiz.feedback.expected"></p>
+                    <button
+                      class="mt-4 rounded-full bg-ocean/10 px-5 py-2 text-sm font-medium text-ocean transition hover:bg-ocean/20"
+                      @click="nextQuestion">
+                      Continuer
+                    </button>
                   </div>
                 </template>
               </div>
@@ -174,12 +185,17 @@
                 <button
                   class="rounded-full border border-slate/15 bg-white/60 px-5 py-2.5 text-sm font-medium text-slate/60 transition hover:bg-slate/10"
                   @click="skipQuestion">
-                  Passer →
+                  Passer
                 </button>
                 <button
                   class="rounded-full border border-ocean/20 bg-ocean/5 px-5 py-2.5 text-sm font-medium text-ocean/70 transition hover:bg-ocean/10"
                   @click="quiz.showMutationTable = true">
                   Indice
+                </button>
+                <button
+                  class="rounded-full border border-orange-300/40 bg-orange-50/60 px-5 py-2.5 text-sm font-medium text-orange-600/80 transition hover:bg-orange-100/60"
+                  @click="revealAnswer">
+                  Voir la réponse
                 </button>
                 <button
                   class="rounded-full bg-ocean px-6 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"

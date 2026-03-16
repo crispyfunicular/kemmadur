@@ -132,6 +132,24 @@ function kemmadurApp() {
       this.nextQuestion();
     },
 
+    revealAnswer() {
+      this.quiz.history.push({
+        question: this.currentQuestion.question,
+        expected: this.currentQuestion.answer,
+        given: "",
+        correct: false,
+        revealed: true,
+      });
+
+      this.quiz.feedback = {
+        correct: false,
+        revealed: true,
+        expected: this.currentQuestion.answer,
+      };
+
+      // score += 0 (implicite)
+    },
+
     nextQuestion() {
       this.quiz.index++;
       this.quiz.answer = "";
@@ -151,7 +169,7 @@ function kemmadurApp() {
 
     handleKeydown(event) {
       if (event.key === "Enter") {
-        if (this.quiz.feedback && this.quiz.feedback.correct) {
+        if (this.quiz.feedback && (this.quiz.feedback.correct || this.quiz.feedback.revealed)) {
           this.nextQuestion();
         } else if (!this.quiz.feedback) {
           this.submitAnswer();
