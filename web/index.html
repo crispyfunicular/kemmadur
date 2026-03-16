@@ -133,6 +133,7 @@
               <!-- Question -->
               <div class="rounded-xl border border-slate/10 bg-white/70 p-6 text-center">
                 <p class="text-2xl font-semibold text-ocean" x-text="currentQuestion.question"></p>
+                <p class="mt-2 text-sm text-slate/50" x-show="currentQuestion.hint" x-text="currentQuestion.hint"></p>
               </div>
 
               <!-- Input -->
@@ -167,6 +168,11 @@
               <!-- Buttons (before feedback) -->
               <div class="mt-4 flex justify-center gap-3" x-show="!quiz.feedback">
                 <button
+                  class="rounded-full border border-slate/15 bg-white/60 px-5 py-2.5 text-sm font-medium text-slate/60 transition hover:bg-slate/10"
+                  @click="skipQuestion">
+                  Passer →
+                </button>
+                <button
                   class="rounded-full bg-ocean px-6 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"
                   @click="submitAnswer">
                   Valider
@@ -194,14 +200,20 @@
                 <li class="flex items-center justify-between gap-3 rounded-xl border border-slate/8 bg-white/60 px-4 py-3 text-sm">
                   <div class="min-w-0">
                     <span class="font-medium text-slate" x-text="entry.question"></span>
-                    <template x-if="!entry.correct">
+                    <template x-if="entry.skipped">
+                      <span class="block text-xs text-slate/50">
+                        Passée — Attendu : <span class="text-ocean font-medium" x-text="entry.expected"></span>
+                      </span>
+                    </template>
+                    <template x-if="!entry.correct && !entry.skipped">
                       <span class="block text-xs text-red-500">
                         Votre réponse : <span x-text="entry.given"></span> — Attendu : <span class="text-ocean font-medium" x-text="entry.expected"></span>
                       </span>
                     </template>
                   </div>
-                  <span class="flex-shrink-0 text-lg" x-text="entry.correct ? '✓' : '✗'"
-                    :class="entry.correct ? 'text-green-600' : 'text-red-500'"></span>
+                  <span class="flex-shrink-0 text-lg"
+                    x-text="entry.correct ? '✓' : (entry.skipped ? '→' : '✗')"
+                    :class="entry.correct ? 'text-green-600' : (entry.skipped ? 'text-slate/40' : 'text-red-500')"></span>
                 </li>
               </template>
             </ul>

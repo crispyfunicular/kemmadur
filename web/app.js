@@ -37,8 +37,8 @@ function kemmadurApp() {
 
       let pool = [];
       cats.forEach(key => {
-        (window.FLASHCARDS[key] || []).forEach(([q, r]) => {
-          pool.push({ question: q, answer: r, category: key });
+        (window.FLASHCARDS[key] || []).forEach(([q, r, h]) => {
+          pool.push({ question: q, answer: r, hint: h || "", category: key });
         });
       });
 
@@ -99,6 +99,17 @@ function kemmadurApp() {
       });
     },
 
+    skipQuestion() {
+      this.quiz.history.push({
+        question: this.currentQuestion.question,
+        expected: this.currentQuestion.answer,
+        given: "",
+        correct: false,
+        skipped: true,
+      });
+      this.nextQuestion();
+    },
+
     nextQuestion() {
       this.quiz.index++;
       this.quiz.answer = "";
@@ -122,6 +133,8 @@ function kemmadurApp() {
         } else {
           this.submitAnswer();
         }
+      } else if (event.key === "Escape" && !this.quiz.feedback) {
+        this.skipQuestion();
       }
     },
 
