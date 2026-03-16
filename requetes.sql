@@ -27,6 +27,9 @@ JOIN déclencheurs décl
 
         -- Exclure les nombres (traités dans la requête nombres)
         AND décl.mot NOT IN ('daou','div','tri','teir','pevar','peder','nav')
+
+        -- Exclure les articles (traités dans la requête articles)
+        AND décl.mot NOT IN ('ar','an','al','ur','un','ul')
         
         -- On ne garde que les cas où la lettre subit bien la mutation demandée
         AND CASE décl.mutation
@@ -185,8 +188,8 @@ WITH ARTICLES AS (
     FROM noms
 )
 
--- article + nom muté + adjectif muté = ?
--- Ex : "ur + c'hoar + skuizh = ?"
+-- article + nom + adjectif = ?
+-- Ex : "ur + goar + skuizh = ?"
 SELECT
     art.article || ' + ' || art.breton || ' + ' || adj.breton || ' = ?' AS question,
     art.article || ' ' ||

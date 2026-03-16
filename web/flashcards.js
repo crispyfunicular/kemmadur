@@ -1,4 +1,4 @@
-// Généré automatiquement — 1078 flashcards
+// Généré automatiquement — 1042 flashcards
 window.FLASHCARDS = {
   "declencheurs": [
     [
@@ -60,36 +60,6 @@ window.FLASHCARDS = {
       "da + ti = ?",
       "da di",
       "à/pour + maison"
-    ],
-    [
-      "ar + mamm = ?",
-      "ar vamm",
-      "le/la + mère"
-    ],
-    [
-      "an + mamm = ?",
-      "an vamm",
-      "le/la + mère"
-    ],
-    [
-      "al + mamm = ?",
-      "al vamm",
-      "le/la + mère"
-    ],
-    [
-      "ur + mamm = ?",
-      "ur vamm",
-      "un/une + mère"
-    ],
-    [
-      "un + mamm = ?",
-      "un vamm",
-      "un/une + mère"
-    ],
-    [
-      "ul + mamm = ?",
-      "ul vamm",
-      "un/une + mère"
     ],
     [
       "e + mamm = ?",
@@ -307,36 +277,6 @@ window.FLASHCARDS = {
       "leur + fenêtre"
     ],
     [
-      "ar + gwezh = ?",
-      "ar c'hwezh",
-      "le/la + fois"
-    ],
-    [
-      "an + gwezh = ?",
-      "an c'hwezh",
-      "le/la + fois"
-    ],
-    [
-      "al + gwezh = ?",
-      "al c'hwezh",
-      "le/la + fois"
-    ],
-    [
-      "ur + gwezh = ?",
-      "ur c'hwezh",
-      "un/une + fois"
-    ],
-    [
-      "un + gwezh = ?",
-      "un c'hwezh",
-      "un/une + fois"
-    ],
-    [
-      "ul + gwezh = ?",
-      "ul c'hwezh",
-      "un/une + fois"
-    ],
-    [
       "e + gwezh = ?",
       "e c'hwezh",
       "son/sa + fois"
@@ -350,36 +290,6 @@ window.FLASHCARDS = {
       "da + gwezh = ?",
       "da c'hwezh",
       "à/pour + fois"
-    ],
-    [
-      "ar + mouezh = ?",
-      "ar vouezh",
-      "le/la + voix"
-    ],
-    [
-      "an + mouezh = ?",
-      "an vouezh",
-      "le/la + voix"
-    ],
-    [
-      "al + mouezh = ?",
-      "al vouezh",
-      "le/la + voix"
-    ],
-    [
-      "ur + mouezh = ?",
-      "ur vouezh",
-      "un/une + voix"
-    ],
-    [
-      "un + mouezh = ?",
-      "un vouezh",
-      "un/une + voix"
-    ],
-    [
-      "ul + mouezh = ?",
-      "ul vouezh",
-      "un/une + voix"
     ],
     [
       "e + mouezh = ?",
@@ -410,36 +320,6 @@ window.FLASHCARDS = {
       "o + plasenn = ?",
       "o flasenn",
       "leur + place"
-    ],
-    [
-      "ar + bro = ?",
-      "ar vro",
-      "le/la + pays"
-    ],
-    [
-      "an + bro = ?",
-      "an vro",
-      "le/la + pays"
-    ],
-    [
-      "al + bro = ?",
-      "al vro",
-      "le/la + pays"
-    ],
-    [
-      "ur + bro = ?",
-      "ur vro",
-      "un/une + pays"
-    ],
-    [
-      "un + bro = ?",
-      "un vro",
-      "un/une + pays"
-    ],
-    [
-      "ul + bro = ?",
-      "ul vro",
-      "un/une + pays"
     ],
     [
       "e + bro = ?",
@@ -507,36 +387,6 @@ window.FLASHCARDS = {
       "leur + fille"
     ],
     [
-      "ar + micher = ?",
-      "ar vicher",
-      "le/la + métier"
-    ],
-    [
-      "an + micher = ?",
-      "an vicher",
-      "le/la + métier"
-    ],
-    [
-      "al + micher = ?",
-      "al vicher",
-      "le/la + métier"
-    ],
-    [
-      "ur + micher = ?",
-      "ur vicher",
-      "un/une + métier"
-    ],
-    [
-      "un + micher = ?",
-      "un vicher",
-      "un/une + métier"
-    ],
-    [
-      "ul + micher = ?",
-      "ul vicher",
-      "un/une + métier"
-    ],
-    [
       "e + micher = ?",
       "e vicher",
       "son/sa + métier"
@@ -600,36 +450,6 @@ window.FLASHCARDS = {
       "da + bed = ?",
       "da ved",
       "à/pour + monde"
-    ],
-    [
-      "ar + gwreg = ?",
-      "ar c'hwreg",
-      "le/la + épouse"
-    ],
-    [
-      "an + gwreg = ?",
-      "an c'hwreg",
-      "le/la + épouse"
-    ],
-    [
-      "al + gwreg = ?",
-      "al c'hwreg",
-      "le/la + épouse"
-    ],
-    [
-      "ur + gwreg = ?",
-      "ur c'hwreg",
-      "un/une + épouse"
-    ],
-    [
-      "un + gwreg = ?",
-      "un c'hwreg",
-      "un/une + épouse"
-    ],
-    [
-      "ul + gwreg = ?",
-      "ul c'hwreg",
-      "un/une + épouse"
     ],
     [
       "e + gwreg = ?",
