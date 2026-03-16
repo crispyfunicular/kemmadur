@@ -22,10 +22,11 @@ def main():
     categories = ["declencheurs", "nombres", "nom_adjectif", "articles", "article_nom_adj"]
     data = {}
 
+    # Parcourt chaque catégorie et exécute la requête SQL correspondante
     for cat in categories:
-        query_fn = getattr(queries, cat)
-        rows = list(query_fn(conn))
-        data[cat] = [list(row) for row in rows]
+        query_fn = getattr(queries, cat)  # Récupère la fonction de requête générée par aiosql
+        rows = list(query_fn(conn))       # Exécute la requête et récupère tous les résultats
+        data[cat] = [list(row) for row in rows]  # Convertit les tuples en listes pour la sérialisation JSON
         print(f"  {cat}: {len(rows)} flashcards")
 
     conn.close()

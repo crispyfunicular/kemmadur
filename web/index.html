@@ -7,6 +7,8 @@
   <title>Kemmadur — Mutations bretonnes</title>
   <meta name="description"
     content="Entraînez-vous aux mutations initiales bretonnes (kemmadurioù) : lénition, spirantisation, durcissement." />
+  <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="logo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -55,9 +57,12 @@
     <!-- Header -->
     <header class="px-6 py-6">
       <div class="mx-auto max-w-2xl flex items-center justify-between">
-        <button type="button" class="text-left" @click="screen = 'setup'">
-          <p class="text-xs uppercase tracking-[0.3em] text-ocean/60">Kemmadur</p>
-          <h1 class="text-2xl font-bold text-ocean">Mutations bretonnes</h1>
+        <button type="button" class="flex items-center gap-3 text-left" @click="screen = 'setup'">
+          <img src="logo.png" alt="Kemmadur" class="h-14 w-14 rounded-full object-cover shadow-md" />
+          <div>
+            <p class="text-xs uppercase tracking-[0.3em] text-ocean/60">Kemmadur</p>
+            <h1 class="text-2xl font-bold text-ocean">Mutations bretonnes</h1>
+          </div>
         </button>
         <a class="text-sm text-slate/60 hover:text-slate transition"
           href="https://github.com/crispyfunicular/kemmadur" target="_blank" rel="noreferrer">
@@ -236,6 +241,9 @@
     </main>
 
     <footer class="px-6 pb-8 text-center text-xs text-slate/40">
+      <a href="https://www.linkedin.com/in/morgane-bona-pellissier-0648aa112/" target="_blank" rel="noreferrer"
+        class="hover:text-slate transition">Réalisé par Morgane Bona-Pellissier</a>
+      <br />
       <a href="https://github.com/crispyfunicular/kemmadur" target="_blank" rel="noreferrer"
         class="hover:text-slate transition">Kemmadur</a>
       — Entraînement aux mutations initiales bretonnes
