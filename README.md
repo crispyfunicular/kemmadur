@@ -12,8 +12,9 @@ Ce projet modélise ces mutations en SQL et génère automatiquement des questio
 - **Déclencheur + nom** → forme mutée (ex : `da + tad = da dad`)
 - **Nom féminin + adjectif** → adjectif muté (ex : `mamm + brav = mamm vrav`)
 - **Article + nom** → article correct + mutation éventuelle (ex : `ar + bro = ar vro`)
+- **Article + nom + adjectif** → mutations combinées (ex : `ur + mamm + brav = ur vamm vrav`)
 
-À terme, un quiz interactif en Python viendra s'appuyer sur cette base, à l'image de [Magister Conjugationis](https://github.com/crispyfunicular/magister_conjugationis/) qui propose un système d'indices progressifs en cas d'erreur.
+Un quiz interactif en ligne de commande (Python + Rich) permet de s'entraîner sur ces combinaisons, à l'image de [Magister Conjugationis](https://github.com/crispyfunicular/magister_conjugationis/).
 
 ## Rappel : les mutations bretonnes
 
@@ -40,41 +41,42 @@ Ce projet modélise ces mutations en SQL et génère automatiquement des questio
 ```bash
 git clone https://github.com/crispyfunicular/kemmadur.git
 cd kemmadur
+pip install rich
 ```
 
 La base SQLite `kemmadur.db` est fournie prête à l'emploi. Pour la recréer depuis les fichiers source :
 
 ```bash
-sqlite3 kemmadur.db < 1_tables.sql
-sqlite3 kemmadur.db < 2_donnees.sql
+sqlite3 kemmadur.db < tables.sql
 ```
 
 ## Utilisation
 
-Générer les questions d'entraînement :
+Lancer le quiz interactif :
 
 ```bash
-sqlite3 kemmadur.db < 3_questions.sql
+python3 kemmadur.py
 ```
 
-Exemple de sortie :
+Exemple de session :
 
 ```
-da + tad = ?|da dad
-da + penn = ?|da benn
-ma + tad = ?|ma zad
-ho + tad = ?|ho tad
-mamm + brav = ?|mamm vrav
-ar + bro = ?|ar vro
+Degemer mat ! Bienvenue dans le test de mutations bretonnes.
+ar + mamm + brav = ?: ar vamm vrav
+Mat tre !
+ur + tad + kozh = ?: ur tad kozh
+Mat tre !
+---
+Fin de l'exercice ! Votre score : 2 / 2
 ```
 
 ## Structure du projet
 
 ```
 kemmadur/
-├── 1_tables.sql        # Schéma (noms, adjectifs, déclencheurs, mutations)
-├── 2_donnees.sql       # Données (vocabulaire + règles de déclenchement)
-├── 3_questions.sql     # Requêtes de génération de quiz
+├── kemmadur.py         # Script principal (quiz interactif CLI)
+├── tables.sql          # Schéma + données (noms, adjectifs, déclencheurs, mutations)
+├── requetes.sql        # Requêtes SQL (tagées @query pour chargement Python)
 ├── kemmadur.db         # Base SQLite pré-remplie
 ├── anki/               # Deck Anki source
 ├── README.md
@@ -85,7 +87,8 @@ kemmadur/
 
 - [x] Modélisation des mutations (lénition, spirantisation, durcissement, mixte)
 - [x] Base de données SQL + requêtes de génération de questions
-- [ ] Quiz interactif CLI en Python
+- [x] Quiz interactif CLI en Python
+- [ ] Choix du type d'exercice (déclencheurs, adjectifs, articles, complet)
 - [ ] Système d'indices progressifs (genre, catégorie de mutation, règle, réponse)
 - [ ] Mode traduction (forme mutée → traduction française)
 - [ ] Interface web

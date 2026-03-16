@@ -1,6 +1,5 @@
 import sqlite3
 import os
-import random
 
 from rich.console import Console
 from rich.prompt import Prompt
@@ -36,6 +35,17 @@ def init_bdd(bdd: str, tables: str) -> None:
     conn.close()
 
 
+def charger_requete(fichier: str, nom: str) -> str:
+    """Charge une requête SQL par son tag @query depuis un fichier."""
+    with open(fichier, "r", encoding="utf-8") as f:
+        contenu = f.read()
+    sections = contenu.split("-- @query ")
+    for section in sections:
+        if section.startswith(nom):
+            return section[len(nom):].strip()
+    raise ValueError(f"Requête '{nom}' introuvable dans {fichier}")
+
+
 def play(bdd: str) -> None:
     # Connexion à la base de données
     conn = sqlite3.connect(bdd)
@@ -43,20 +53,8 @@ def play(bdd: str) -> None:
 
     console.print("[bold blue]Degemer mat ! Bienvenue dans le test de mutations bretonnes.[/bold blue]")
 
-    requete_sql = """
-    SELECT
-        noms.breton || ' + ' || adjectifs.breton || ' = ?' AS question,
-        noms.breton || ' ' || mut.adoucissante || SUBSTR(adjectifs.breton, 2) AS réponse
-    FROM adjectifs
-    JOIN noms
-        ON noms.genre = 'f'
-    JOIN mutations mut
-        ON SUBSTR(adjectifs.breton, 1, 1) = mut.lettre_initiale
-    WHERE
-        mut.adoucissante IS NOT NULL
-    ORDER BY RANDOM()
-    LIMIT 10;
-    """
+    # Chargement de la requête depuis requetes.sql
+    requete_sql = charger_requete("requetes.sql", "article_nom_adj")
 
     # Exécution de la requête
     try:
