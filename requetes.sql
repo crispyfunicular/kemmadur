@@ -35,7 +35,7 @@ JOIN déclencheurs décl
 
 
 -- ==============================================================================
--- Nom + adjectif : mamm + brav = ?
+-- Nom + adjectif : "mamm + brav = ?"
 -- ==============================================================================
 
 -- Noms féminins : mutation adoucissante de l'adjectif
@@ -67,68 +67,107 @@ JOIN noms
 -- ==============================================================================
 
 WITH ARTICLES AS (
+    -- Article défini (an/al/ar)
     SELECT
         breton,
         genre,
-        -- Article défini (an/al/ar)
         CASE
             WHEN LOWER(SUBSTR(breton, 1, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'an'
             -- Variante avec LEFT : WHEN LOWER(LEFT(breton, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'an'
             WHEN LOWER(breton) LIKE 'l%' THEN 'al'
             ELSE 'ar'
-        END AS article_def,
+        END AS article
+    FROM noms
 
-        -- Article indéfini (un/ul/ur)
+    UNION ALL
+
+    -- Article indéfini (un/ul/ur)
+    SELECT
+        breton,
+        genre,
         CASE
             WHEN LOWER(SUBSTR(breton, 1, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'un'
             WHEN LOWER(breton) LIKE 'l%' THEN 'ul'
             ELSE 'ur'
-        END AS article_indef
+        END AS article
     FROM noms
 )
 
--- Article défini (an/al/ar)
--- Ex question : "ar + bro = ?" / "an + penn = ?"
+-- Ex question : "ar + bro = ?" / "ur + penn = ?"
 SELECT
-    art.article_def || ' + ' || art.breton || ' = ?' AS question,
-    art.article_def || ' ' || 
-    CASE 
-        WHEN art.genre = 'f' AND mut.adoucissante IS NOT NULL 
-        -- Ex ('bro' -> 'vro') : 'v' || 'ro'
-        THEN mut.adoucissante || SUBSTR(art.breton, 2)
-        -- Ex 'penn' -> 'penn' (masculin + 'p'.adoucissante = NULL)
-        ELSE art.breton 
-    END AS réponse
-FROM ARTICLES art
-LEFT JOIN mutations mut 
-    ON LOWER(SUBSTR(art.breton, 1, 1)) = mut.lettre_initiale
-
-UNION ALL
-
--- Article indéfini (un/ul/ur)
--- Ex question : "ur + bro = ?" / "un + penn = ?"
-SELECT
-    art.article_indef || ' + ' || art.breton || ' = ?' AS question,
-    art.article_indef || ' ' || 
-    CASE 
+    art.article || ' + ' || art.breton || ' = ?' AS question,
+    art.article || ' ' ||
+    CASE
         WHEN art.genre = 'f' AND mut.adoucissante IS NOT NULL
         -- Ex ('bro' -> 'vro') : 'v' || 'ro'
         THEN mut.adoucissante || SUBSTR(art.breton, 2)
         -- Ex 'penn' -> 'penn' (masculin + 'p'.adoucissante = NULL)
-        ELSE art.breton 
+        ELSE art.breton
     END AS réponse
 FROM ARTICLES art
-LEFT JOIN mutations mut 
+LEFT JOIN mutations mut
     ON LOWER(SUBSTR(art.breton, 1, 1)) = mut.lettre_initiale;
 
 
+-- ==============================================================================
+-- Article + nom + adjectif : "ur + mamm + brav = ?"
+-- ==============================================================================
+
+-- Identique requête articles définis et indéfinis
 WITH ARTICLES AS (
-    -- même CTE que la requête 3
-    ...
+    -- Article défini (an/al/ar)
+    SELECT
+        breton,
+        genre,
+        CASE
+            WHEN LOWER(SUBSTR(breton, 1, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'an'
+            WHEN LOWER(breton) LIKE 'l%' THEN 'al'
+            ELSE 'ar'
+        END AS article
+    FROM noms
+
+    UNION ALL
+
+    -- Article indéfini (un/ul/ur)
+    SELECT
+        breton,
+        genre,
+        CASE
+            WHEN LOWER(SUBSTR(breton, 1, 1)) IN ('n', 't', 'd', 'h', 'a', 'e', 'i', 'o', 'u') THEN 'un'
+            WHEN LOWER(breton) LIKE 'l%' THEN 'ul'
+            ELSE 'ur'
+        END AS article
+    FROM noms
 )
+
+-- article + nom muté + adjectif muté = ?
+-- Ex : "ur + c'hoar + skuizh = ?"
 SELECT
-    -- article + nom muté + adjectif muté = ?
-    ...
+    art.article || ' + ' || art.breton || ' + ' || adj.breton || ' = ?' AS question,
+    art.article || ' ' ||
+    -- CASE 1 : mutation du nom (féminin uniquement)
+    CASE
+        -- Si le nom est féminin et que sa lettre initiale a une mutation adoucissante
+        WHEN art.genre = 'f' AND mut_nom.adoucissante IS NOT NULL
+        -- Ex ('bro' -> 'vro') : 'v' || 'ro'
+        -- Ex ('mamm' -> 'vamm') : 'v' || 'amm'
+        THEN mut_nom.adoucissante || SUBSTR(art.breton, 2)
+        -- Ex 'ur' + 'penn' -> 'penn' (masculin + 'p'.adoucissante = NULL -> pas de mutation)
+        ELSE art.breton
+    END || ' ' ||
+    -- CASE 2 : mutation de l'adjectif (si nom féminin)
+    CASE
+        -- Si le nom est féminin et que la lettre initiale de l'adjectif a une mutation adoucissante
+        WHEN art.genre = 'f' AND mut_adj.adoucissante IS NOT NULL
+        -- Ex ('brav' -> 'vrav') : 'v' || 'rav'
+        THEN mut_adj.adoucissante || SUBSTR(adj.breton, 2)
+        ELSE adj.breton
+    END AS réponse
 FROM ARTICLES art
-JOIN adjectifs ...
-LEFT JOIN mutations ...
+JOIN adjectifs adj
+    ON 1=1
+LEFT JOIN mutations mut_nom
+    ON SUBSTR(art.breton, 1, 1) = mut_nom.lettre_initiale
+LEFT JOIN mutations mut_adj
+    ON SUBSTR(adj.breton, 1, 1) = mut_adj.lettre_initiale;
+
