@@ -19,7 +19,7 @@ def main():
     queries = aiosql.from_path(sql_path, "sqlite3")
     conn = sqlite3.connect(db_path)
 
-    categories = ["declencheurs", "nom_adjectif", "articles", "article_nom_adj"]
+    categories = ["declencheurs", "nombres", "nom_adjectif", "articles", "article_nom_adj"]
     data = {}
 
     for cat in categories:

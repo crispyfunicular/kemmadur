@@ -88,49 +88,37 @@ VALUES
 CREATE TABLE IF NOT EXISTS déclencheurs (
     id INTEGER PRIMARY KEY,
     mot TEXT,
+    français TEXT,
     mutation TEXT,
-    critère_genre TEXT,
-    critère_pl TEXT
+    critère_genre TEXT
 );
 
-INSERT INTO déclencheurs (mot, mutation, critère_genre, critère_pl)
+INSERT INTO déclencheurs (mot, français, mutation, critère_genre)
 VALUES
     -- Les articles (en fonction du mot suivant)
-    ('ar', 'adoucissante', 'f', NULL),
-    ('an', 'adoucissante', 'f', NULL),
-    ('al', 'adoucissante', 'f', NULL),
-    ('ur', 'adoucissante', 'f', NULL),
-    ('un', 'adoucissante', 'f', NULL),
-    ('ul', 'adoucissante', 'f', NULL),
-    -- L'exception des hommes au pluriel (TODO critère_pl)
-    -- ('ar', 'adoucissante', 'm', 'ed'),
+    ('ar', 'le/la', 'adoucissante', 'f'),
+    ('an', 'le/la', 'adoucissante', 'f'),
+    ('al', 'le/la', 'adoucissante', 'f'),
+    ('ur', 'un/une', 'adoucissante', 'f'),
+    ('un', 'un/une', 'adoucissante', 'f'),
+    ('ul', 'un/une', 'adoucissante', 'f'),
 
     -- Les pronoms possessifs (peu importe le mot suivant)
-    ('ma', 'spirante', NULL, NULL),    -- mon
-    ('va', 'spirante', NULL, NULL),    -- mon
-    ('e', 'adoucissante', NULL, NULL), -- son/sa (à lui)
-    ('he', 'spirante', NULL, NULL),    -- son/sa (à elle)
-    ('ho', 'durcissante', NULL, NULL), -- votre
-    ('o', 'spirante', NULL, NULL),     -- leur
+    ('ma', 'mon/ma', 'spirante', NULL),
+    ('va', 'mon/ma', 'spirante', NULL),
+    ('e', 'son/sa', 'adoucissante', NULL),
+    ('he', 'son/sa', 'spirante', NULL),
+    ('ho', 'votre', 'durcissante', NULL),
+    ('o', 'leur', 'spirante', NULL),
 
     -- Les prépositions
-    ('da', 'adoucissante', NULL, NULL);
-    -- TODO : prépositions à réintégrer avec des critères plus fins
-    -- ('war', 'adoucissante', NULL, NULL),
-    -- ('a', 'adoucissante', NULL, NULL),
-    -- ('dre', 'adoucissante', NULL, NULL),
-    -- ('dindan', 'adoucissante', NULL, NULL);
+    ('da', 'à/pour', 'adoucissante', NULL),
 
--- TODO : Les nombres (genre + nom comptable uniquement)
--- Nécessite de concilier critère_pl :
---   'ed' pour ar masculin (pluriel en -ed)
---   '%' pour les nombres (tout pluriel)
--- INSERT INTO déclencheurs (mot, mutation, critère_genre, critère_pl)
--- VALUES
---     ('daou', 'adoucissante', 'm', '%'),   -- deux (masc.)
---     ('div', 'adoucissante', 'f', '%'),     -- deux (fém.)
---     ('tri', 'spirante', 'm', '%'),         -- trois (masc.)
---     ('teir', 'spirante', 'f', '%'),        -- trois (fém.)
---     ('pevar', 'spirante', 'm', '%'),       -- quatre (masc.)
---     ('peder', 'spirante', 'f', '%'),       -- quatre (fém.)
---     ('nav', 'spirante', NULL, '%');         -- neuf (les deux genres)
+    -- Les nombres
+    ('daou', 'deux', 'adoucissante', 'm'),
+    ('div', 'deux', 'adoucissante', 'f'),
+    ('tri', 'trois', 'spirante', 'm'),
+    ('teir', 'trois', 'spirante', 'f'),
+    ('pevar', 'quatre', 'spirante', 'm'),
+    ('peder', 'quatre', 'spirante', 'f'),
+    ('nav', 'neuf', 'spirante', NULL);
