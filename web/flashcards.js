@@ -1,4 +1,4 @@
-// Généré automatiquement — 1032 flashcards
+// Généré automatiquement — 1078 flashcards
 window.FLASHCARDS = {
   "declencheurs": [
     [
@@ -14,12 +14,12 @@ window.FLASHCARDS = {
     [
       "e + tad = ?",
       "e dad",
-      "son/sa (à lui) + père"
+      "son/sa + père"
     ],
     [
       "he + tad = ?",
       "he zad",
-      "son/sa (à elle) + père"
+      "son/sa + père"
     ],
     [
       "o + tad = ?",
@@ -44,12 +44,12 @@ window.FLASHCARDS = {
     [
       "e + ti = ?",
       "e di",
-      "son/sa (à lui) + maison"
+      "son/sa + maison"
     ],
     [
       "he + ti = ?",
       "he zi",
-      "son/sa (à elle) + maison"
+      "son/sa + maison"
     ],
     [
       "o + ti = ?",
@@ -94,7 +94,7 @@ window.FLASHCARDS = {
     [
       "e + mamm = ?",
       "e vamm",
-      "son/sa (à lui) + mère"
+      "son/sa + mère"
     ],
     [
       "da + mamm = ?",
@@ -114,7 +114,7 @@ window.FLASHCARDS = {
     [
       "he + penn = ?",
       "he fenn",
-      "son/sa (à elle) + tête"
+      "son/sa + tête"
     ],
     [
       "o + penn = ?",
@@ -124,7 +124,7 @@ window.FLASHCARDS = {
     [
       "e + breur = ?",
       "e vreur",
-      "son/sa (à lui) + frère"
+      "son/sa + frère"
     ],
     [
       "ho + breur = ?",
@@ -139,7 +139,7 @@ window.FLASHCARDS = {
     [
       "e + gouel = ?",
       "e c'houel",
-      "son/sa (à lui) + fête"
+      "son/sa + fête"
     ],
     [
       "ho + gouel = ?",
@@ -154,7 +154,7 @@ window.FLASHCARDS = {
     [
       "e + diaoul = ?",
       "e ziaoul",
-      "son/sa (à lui) + diable"
+      "son/sa + diable"
     ],
     [
       "ho + diaoul = ?",
@@ -179,12 +179,12 @@ window.FLASHCARDS = {
     [
       "e + kan = ?",
       "e gan",
-      "son/sa (à lui) + chant"
+      "son/sa + chant"
     ],
     [
       "he + kan = ?",
       "he c'han",
-      "son/sa (à elle) + chant"
+      "son/sa + chant"
     ],
     [
       "o + kan = ?",
@@ -209,12 +209,12 @@ window.FLASHCARDS = {
     [
       "e + kann = ?",
       "e gann",
-      "son/sa (à lui) + bagarre"
+      "son/sa + bagarre"
     ],
     [
       "he + kann = ?",
       "he c'hann",
-      "son/sa (à elle) + bagarre"
+      "son/sa + bagarre"
     ],
     [
       "o + kann = ?",
@@ -229,7 +229,7 @@ window.FLASHCARDS = {
     [
       "e + mel = ?",
       "e vel",
-      "son/sa (à lui) + miel"
+      "son/sa + miel"
     ],
     [
       "da + mel = ?",
@@ -239,7 +239,7 @@ window.FLASHCARDS = {
     [
       "e + maez = ?",
       "e vaez",
-      "son/sa (à lui) + campagne"
+      "son/sa + campagne"
     ],
     [
       "da + maez = ?",
@@ -259,12 +259,12 @@ window.FLASHCARDS = {
     [
       "e + tud = ?",
       "e dud",
-      "son/sa (à lui) + gens"
+      "son/sa + gens"
     ],
     [
       "he + tud = ?",
       "he zud",
-      "son/sa (à elle) + gens"
+      "son/sa + gens"
     ],
     [
       "o + tud = ?",
@@ -279,7 +279,7 @@ window.FLASHCARDS = {
     [
       "e + mor = ?",
       "e vor",
-      "son/sa (à lui) + mer"
+      "son/sa + mer"
     ],
     [
       "da + mor = ?",
@@ -299,7 +299,7 @@ window.FLASHCARDS = {
     [
       "he + prenestr = ?",
       "he frenestr",
-      "son/sa (à elle) + fenêtre"
+      "son/sa + fenêtre"
     ],
     [
       "o + prenestr = ?",
@@ -339,7 +339,7 @@ window.FLASHCARDS = {
     [
       "e + gwezh = ?",
       "e c'hwezh",
-      "son/sa (à lui) + fois"
+      "son/sa + fois"
     ],
     [
       "ho + gwezh = ?",
@@ -384,7 +384,7 @@ window.FLASHCARDS = {
     [
       "e + mouezh = ?",
       "e vouezh",
-      "son/sa (à lui) + voix"
+      "son/sa + voix"
     ],
     [
       "da + mouezh = ?",
@@ -404,7 +404,7 @@ window.FLASHCARDS = {
     [
       "he + plasenn = ?",
       "he flasenn",
-      "son/sa (à elle) + place"
+      "son/sa + place"
     ],
     [
       "o + plasenn = ?",
@@ -444,7 +444,7 @@ window.FLASHCARDS = {
     [
       "e + bro = ?",
       "e vro",
-      "son/sa (à lui) + pays"
+      "son/sa + pays"
     ],
     [
       "ho + bro = ?",
@@ -469,12 +469,12 @@ window.FLASHCARDS = {
     [
       "e + ti-post = ?",
       "e di-post",
-      "son/sa (à lui) + poste"
+      "son/sa + poste"
     ],
     [
       "he + ti-post = ?",
       "he zi-post",
-      "son/sa (à elle) + poste"
+      "son/sa + poste"
     ],
     [
       "o + ti-post = ?",
@@ -499,7 +499,7 @@ window.FLASHCARDS = {
     [
       "he + plac'h = ?",
       "he flac'h",
-      "son/sa (à elle) + fille"
+      "son/sa + fille"
     ],
     [
       "o + plac'h = ?",
@@ -539,7 +539,7 @@ window.FLASHCARDS = {
     [
       "e + micher = ?",
       "e vicher",
-      "son/sa (à lui) + métier"
+      "son/sa + métier"
     ],
     [
       "da + micher = ?",
@@ -549,7 +549,7 @@ window.FLASHCARDS = {
     [
       "e + glav = ?",
       "e c'hlav",
-      "son/sa (à lui) + pluie"
+      "son/sa + pluie"
     ],
     [
       "ho + glav = ?",
@@ -564,7 +564,7 @@ window.FLASHCARDS = {
     [
       "e + bloaz = ?",
       "e vloaz",
-      "son/sa (à lui) + année"
+      "son/sa + année"
     ],
     [
       "ho + bloaz = ?",
@@ -579,7 +579,7 @@ window.FLASHCARDS = {
     [
       "e + matematikoù = ?",
       "e vatematikoù",
-      "son/sa (à lui) + mathématiques"
+      "son/sa + mathématiques"
     ],
     [
       "da + matematikoù = ?",
@@ -589,7 +589,7 @@ window.FLASHCARDS = {
     [
       "e + bed = ?",
       "e ved",
-      "son/sa (à lui) + monde"
+      "son/sa + monde"
     ],
     [
       "ho + bed = ?",
@@ -634,7 +634,7 @@ window.FLASHCARDS = {
     [
       "e + gwreg = ?",
       "e c'hwreg",
-      "son/sa (à lui) + épouse"
+      "son/sa + épouse"
     ],
     [
       "ho + gwreg = ?",
@@ -645,6 +645,238 @@ window.FLASHCARDS = {
       "da + gwreg = ?",
       "da c'hwreg",
       "à/pour + épouse"
+    ]
+  ],
+  "nombres": [
+    [
+      "daou + tad = ?",
+      "daou dad",
+      "deux + père"
+    ],
+    [
+      "tri + tad = ?",
+      "tri zad",
+      "trois + père"
+    ],
+    [
+      "pevar + tad = ?",
+      "pevar zad",
+      "quatre + père"
+    ],
+    [
+      "nav + tad = ?",
+      "nav zad",
+      "neuf + père"
+    ],
+    [
+      "daou + ti = ?",
+      "daou di",
+      "deux + maison"
+    ],
+    [
+      "tri + ti = ?",
+      "tri zi",
+      "trois + maison"
+    ],
+    [
+      "pevar + ti = ?",
+      "pevar zi",
+      "quatre + maison"
+    ],
+    [
+      "nav + ti = ?",
+      "nav zi",
+      "neuf + maison"
+    ],
+    [
+      "div + mamm = ?",
+      "div vamm",
+      "deux + mère"
+    ],
+    [
+      "tri + penn = ?",
+      "tri fenn",
+      "trois + tête"
+    ],
+    [
+      "pevar + penn = ?",
+      "pevar fenn",
+      "quatre + tête"
+    ],
+    [
+      "nav + penn = ?",
+      "nav fenn",
+      "neuf + tête"
+    ],
+    [
+      "daou + breur = ?",
+      "daou vreur",
+      "deux + frère"
+    ],
+    [
+      "daou + gouel = ?",
+      "daou c'houel",
+      "deux + fête"
+    ],
+    [
+      "daou + diaoul = ?",
+      "daou ziaoul",
+      "deux + diable"
+    ],
+    [
+      "daou + kan = ?",
+      "daou gan",
+      "deux + chant"
+    ],
+    [
+      "tri + kan = ?",
+      "tri c'han",
+      "trois + chant"
+    ],
+    [
+      "pevar + kan = ?",
+      "pevar c'han",
+      "quatre + chant"
+    ],
+    [
+      "nav + kan = ?",
+      "nav c'han",
+      "neuf + chant"
+    ],
+    [
+      "daou + kann = ?",
+      "daou gann",
+      "deux + bagarre"
+    ],
+    [
+      "tri + kann = ?",
+      "tri c'hann",
+      "trois + bagarre"
+    ],
+    [
+      "pevar + kann = ?",
+      "pevar c'hann",
+      "quatre + bagarre"
+    ],
+    [
+      "nav + kann = ?",
+      "nav c'hann",
+      "neuf + bagarre"
+    ],
+    [
+      "daou + maez = ?",
+      "daou vaez",
+      "deux + campagne"
+    ],
+    [
+      "daou + mor = ?",
+      "daou vor",
+      "deux + mer"
+    ],
+    [
+      "tri + prenestr = ?",
+      "tri frenestr",
+      "trois + fenêtre"
+    ],
+    [
+      "pevar + prenestr = ?",
+      "pevar frenestr",
+      "quatre + fenêtre"
+    ],
+    [
+      "nav + prenestr = ?",
+      "nav frenestr",
+      "neuf + fenêtre"
+    ],
+    [
+      "div + gwezh = ?",
+      "div c'hwezh",
+      "deux + fois"
+    ],
+    [
+      "div + mouezh = ?",
+      "div vouezh",
+      "deux + voix"
+    ],
+    [
+      "teir + plasenn = ?",
+      "teir flasenn",
+      "trois + place"
+    ],
+    [
+      "peder + plasenn = ?",
+      "peder flasenn",
+      "quatre + place"
+    ],
+    [
+      "nav + plasenn = ?",
+      "nav flasenn",
+      "neuf + place"
+    ],
+    [
+      "div + bro = ?",
+      "div vro",
+      "deux + pays"
+    ],
+    [
+      "daou + ti-post = ?",
+      "daou di-post",
+      "deux + poste"
+    ],
+    [
+      "tri + ti-post = ?",
+      "tri zi-post",
+      "trois + poste"
+    ],
+    [
+      "pevar + ti-post = ?",
+      "pevar zi-post",
+      "quatre + poste"
+    ],
+    [
+      "nav + ti-post = ?",
+      "nav zi-post",
+      "neuf + poste"
+    ],
+    [
+      "teir + plac'h = ?",
+      "teir flac'h",
+      "trois + fille"
+    ],
+    [
+      "peder + plac'h = ?",
+      "peder flac'h",
+      "quatre + fille"
+    ],
+    [
+      "nav + plac'h = ?",
+      "nav flac'h",
+      "neuf + fille"
+    ],
+    [
+      "div + micher = ?",
+      "div vicher",
+      "deux + métier"
+    ],
+    [
+      "daou + glav = ?",
+      "daou c'hlav",
+      "deux + pluie"
+    ],
+    [
+      "daou + bloaz = ?",
+      "daou vloaz",
+      "deux + année"
+    ],
+    [
+      "daou + bed = ?",
+      "daou ved",
+      "deux + monde"
+    ],
+    [
+      "div + gwreg = ?",
+      "div c'hwreg",
+      "deux + épouse"
     ]
   ],
   "nom_adjectif": [

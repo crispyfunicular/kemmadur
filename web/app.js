@@ -3,6 +3,7 @@ function kemmadurApp() {
     screen: "setup",
     categories: [
       { key: "declencheurs", label: "Déclencheur + nom", desc: "da + tad = ?" },
+      { key: "nombres", label: "Nombre + nom", desc: "daou + tad = ?" },
       { key: "nom_adjectif", label: "Nom + adjectif", desc: "mamm + brav = ?" },
       { key: "articles", label: "Article + nom", desc: "ar + bro = ?" },
       { key: "article_nom_adj", label: "Article + nom + adjectif", desc: "ur + mamm + brav = ?" },
@@ -17,6 +18,8 @@ function kemmadurApp() {
       answer: "",
       feedback: null,
       history: [],
+      showMutationTable: false,
+      errors: 0,
     },
 
     get totalAvailable() {
@@ -38,7 +41,7 @@ function kemmadurApp() {
       let pool = [];
       cats.forEach(key => {
         (window.FLASHCARDS[key] || []).forEach(([q, r, h]) => {
-          pool.push({ question: q, answer: r, hint: h || "", category: key });
+          pool.push({ question: q, answer: r, traduction: h || "", category: key });
         });
       });
 
@@ -55,6 +58,7 @@ function kemmadurApp() {
       this.quiz.answer = "";
       this.quiz.feedback = null;
       this.quiz.history = [];
+      this.quiz.errors = 0;
       this.screen = "quiz";
 
       this.$nextTick(() => {
@@ -83,20 +87,38 @@ function kemmadurApp() {
       const isCorrect = given === correct;
 
       if (isCorrect) {
-        this.quiz.score++;
+        this.quiz.score += this.quiz.errors > 0 ? 0.5 : 1;
+
+        this.quiz.feedback = {
+          correct: true,
+          expected: this.currentQuestion.answer,
+        };
+
+        this.quiz.history.push({
+          question: this.currentQuestion.question,
+          expected: this.currentQuestion.answer,
+          given: this.quiz.answer.trim(),
+          correct: true,
+          hadErrors: this.quiz.errors > 0,
+        });
+      } else {
+        this.quiz.errors++;
+
+        this.quiz.feedback = {
+          correct: false,
+          expected: this.currentQuestion.answer,
+        };
+
+        // Clear feedback after a delay so user can retry
+        setTimeout(() => {
+          this.quiz.feedback = null;
+          this.quiz.answer = "";
+          this.$nextTick(() => {
+            const input = document.getElementById("answer-input");
+            if (input) input.focus();
+          });
+        }, 1500);
       }
-
-      this.quiz.feedback = {
-        correct: isCorrect,
-        expected: this.currentQuestion.answer,
-      };
-
-      this.quiz.history.push({
-        question: this.currentQuestion.question,
-        expected: this.currentQuestion.answer,
-        given: this.quiz.answer.trim(),
-        correct: isCorrect,
-      });
     },
 
     skipQuestion() {
@@ -114,6 +136,7 @@ function kemmadurApp() {
       this.quiz.index++;
       this.quiz.answer = "";
       this.quiz.feedback = null;
+      this.quiz.errors = 0;
 
       if (this.quiz.index >= this.quiz.questions.length) {
         this.screen = "summary";
@@ -128,9 +151,9 @@ function kemmadurApp() {
 
     handleKeydown(event) {
       if (event.key === "Enter") {
-        if (this.quiz.feedback) {
+        if (this.quiz.feedback && this.quiz.feedback.correct) {
           this.nextQuestion();
-        } else {
+        } else if (!this.quiz.feedback) {
           this.submitAnswer();
         }
       } else if (event.key === "Escape" && !this.quiz.feedback) {
@@ -146,6 +169,8 @@ function kemmadurApp() {
         answer: "",
         feedback: null,
         history: [],
+        showMutationTable: false,
+        errors: 0,
       };
       this.screen = "setup";
     },

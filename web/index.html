@@ -133,7 +133,7 @@
               <!-- Question -->
               <div class="rounded-xl border border-slate/10 bg-white/70 p-6 text-center">
                 <p class="text-2xl font-semibold text-ocean" x-text="currentQuestion.question"></p>
-                <p class="mt-2 text-sm text-slate/50" x-show="currentQuestion.hint" x-text="currentQuestion.hint"></p>
+                <p class="mt-2 text-sm text-slate/50" x-show="currentQuestion.traduction" x-text="currentQuestion.traduction"></p>
               </div>
 
               <!-- Input -->
@@ -147,22 +147,21 @@
               <!-- Feedback -->
               <div class="mt-4 text-center" x-show="quiz.feedback">
                 <template x-if="quiz.feedback && quiz.feedback.correct">
-                  <p class="text-lg font-semibold text-green-700">Mat tre ! ✓</p>
+                  <div>
+                    <p class="text-lg font-semibold text-green-700">Mat tre ! ✓</p>
+                    <button
+                      class="mt-4 rounded-full bg-ocean/10 px-5 py-2 text-sm font-medium text-ocean transition hover:bg-ocean/20"
+                      @click="nextQuestion">
+                      Continuer →
+                    </button>
+                  </div>
                 </template>
                 <template x-if="quiz.feedback && !quiz.feedback.correct">
                   <div>
                     <p class="text-lg font-semibold text-red-600">Fazi…</p>
-                    <p class="mt-1 text-sm text-slate/70">
-                      Réponse attendue : <span class="font-semibold text-ocean"
-                        x-text="quiz.feedback.expected"></span>
-                    </p>
+                    <p class="mt-1 text-sm text-slate/50 italic">Réessayez…</p>
                   </div>
                 </template>
-                <button
-                  class="mt-4 rounded-full bg-ocean/10 px-5 py-2 text-sm font-medium text-ocean transition hover:bg-ocean/20"
-                  @click="nextQuestion">
-                  Continuer →
-                </button>
               </div>
 
               <!-- Buttons (before feedback) -->
@@ -171,6 +170,11 @@
                   class="rounded-full border border-slate/15 bg-white/60 px-5 py-2.5 text-sm font-medium text-slate/60 transition hover:bg-slate/10"
                   @click="skipQuestion">
                   Passer →
+                </button>
+                <button
+                  class="rounded-full border border-ocean/20 bg-ocean/5 px-5 py-2.5 text-sm font-medium text-ocean/70 transition hover:bg-ocean/10"
+                  @click="quiz.showMutationTable = true">
+                  Indice
                 </button>
                 <button
                   class="rounded-full bg-ocean px-6 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"
@@ -236,6 +240,39 @@
         class="hover:text-slate transition">Kemmadur</a>
       — Entraînement aux mutations initiales bretonnes
     </footer>
+
+    <!-- Mutation table modal -->
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4"
+      x-show="quiz.showMutationTable" x-cloak @click.self="quiz.showMutationTable = false">
+      <div class="card rounded-2xl p-6 shadow-lg max-w-lg w-full">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-ocean">Tableau des mutations</h3>
+          <button class="text-slate/40 hover:text-slate transition text-xl leading-none" @click="quiz.showMutationTable = false">&times;</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left">
+            <thead>
+              <tr class="border-b border-slate/15">
+                <th class="py-2 pr-4 font-semibold text-slate">Initiale</th>
+                <th class="py-2 pr-4 font-semibold text-slate">Durcissante</th>
+                <th class="py-2 pr-4 font-semibold text-slate">Adoucissante</th>
+                <th class="py-2 font-semibold text-slate">Spirante</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate/70">
+              <tr class="border-b border-slate/8"><td class="py-1.5 pr-4 font-medium text-ocean">b</td><td class="py-1.5 pr-4">p</td><td class="py-1.5 pr-4">v</td><td class="py-1.5">—</td></tr>
+              <tr class="border-b border-slate/8"><td class="py-1.5 pr-4 font-medium text-ocean">d</td><td class="py-1.5 pr-4">t</td><td class="py-1.5 pr-4">z</td><td class="py-1.5">—</td></tr>
+              <tr class="border-b border-slate/8"><td class="py-1.5 pr-4 font-medium text-ocean">g</td><td class="py-1.5 pr-4">k</td><td class="py-1.5 pr-4">c'h</td><td class="py-1.5">—</td></tr>
+              <tr class="border-b border-slate/8"><td class="py-1.5 pr-4 font-medium text-ocean">gw</td><td class="py-1.5 pr-4">kw</td><td class="py-1.5 pr-4">w</td><td class="py-1.5">—</td></tr>
+              <tr class="border-b border-slate/8"><td class="py-1.5 pr-4 font-medium text-ocean">k</td><td class="py-1.5 pr-4">—</td><td class="py-1.5 pr-4">g</td><td class="py-1.5">c'h</td></tr>
+              <tr class="border-b border-slate/8"><td class="py-1.5 pr-4 font-medium text-ocean">m</td><td class="py-1.5 pr-4">—</td><td class="py-1.5 pr-4">v</td><td class="py-1.5">—</td></tr>
+              <tr class="border-b border-slate/8"><td class="py-1.5 pr-4 font-medium text-ocean">p</td><td class="py-1.5 pr-4">—</td><td class="py-1.5 pr-4">—</td><td class="py-1.5">f</td></tr>
+              <tr><td class="py-1.5 pr-4 font-medium text-ocean">t</td><td class="py-1.5 pr-4">—</td><td class="py-1.5 pr-4">d</td><td class="py-1.5">z</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="flashcards.js"></script>
