@@ -1,7 +1,5 @@
 # KEMMADUR : Entraînement aux mutations initiales bretonnes
 
-> ⚠️ **Ce projet est en cours de développement.**
-
 Outil pour s'entraîner aux mutations initiales en breton (*kemmadurioù*). Le projet génère des questions de type quiz à partir d'une base de données SQLite couvrant la lénition (adoucissement), la spirantisation, le durcissement et la mutation mixte.
 
 ## Description
