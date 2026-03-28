@@ -34,7 +34,14 @@ VALUES
     ('tenn', 'difficile'),
     ('pell', 'loin'),
     ('kozh', 'vieux'),
-    ('brav', 'beau');
+    ('brav', 'beau'),
+    ('yen', 'froid'),
+    ('tomm', 'chaud'),
+    ('gouest', 'capable'),
+    ('aes', 'facile'),
+    ('nevez', 'nouveau'),
+    ('plijus', 'agréable'),
+    ('drouk', 'méchant');
 
 
 -- Noms
